@@ -1,0 +1,54 @@
+
+Constrained Resource Allocating Agent: A Generalized Framework & Practices
+
+In conventional intersection management systems, we have a central server communicating with incoming traffics. Each vehicle client receives a segment of road rights to enter the intersection in a limited amount of time. The problem can be formulated as a resource allocation task, in which the central server is responsible for which vehicles (a set of clients) get the rights of entering intersection (limited resources.) Moreover, we can take a step further and generalize this problem as a framework for various domains, for instance--
+
+1. Multithreaded computing
+  - client: threads
+  - resource: memory + processing units
+  - constraint: variable/statement dependencies, process priority, mutual exclusion, safety, liveness 
+  - objective: minimize total run time
+
+2. Project management
+  - client: team members
+  - resource: time + money
+  - constraint: deadlines, budget, requirements, specifications
+  - objective: minimize money spent
+
+3. Event reservation
+  - client: potential users
+  - resource: number of tables, space, room capacity, open time slots
+  - constraint: time needed, guests size, budget, urgency
+  - objective: have as many users at the same time as possible
+
+4. Financial investment
+  - client: stocks
+  - resource: capital
+  - constraint: performance projections, assets
+  - objective: maximize total assets
+
+Now, we can map this framework to typical RL problems as following--
+
+Agent: a central server allocating resources
+
+Action: allocate some units of resources to some clients
+
+State: which clients get what resources
+
+Reward: small negative for anti-objective behaviors, huge negative for constraint violations
+
+
+In this setup, we may have to face two scenarios: 
+
+1. Under the assumption that constraints and objectives are complete and well-defined, we can simulate exploration to avoid constraint violations
+
+2. When the constraints or objectives are unclear, we will have to build the reward model by sampling explored returns
+
+In practice, we should have some prior domain knowledge about the constraints and objectives; however, they are often incomplete or only partially observable. Thus, we will need to establish a learning method to combine the two strategies, and it has to be on-line learning because new clients, resources, constraints or objectives may be added or modified on the fly in most real-world applications we are interested in. We may also have to discretize the resources when continuous to simplify the domain, or we will have to do something similar to fitted-R-MAX.
+
+Do you think this is a reasonable project for this course? Has something similar been done before? What other projects might be relevant to look at besides AIM?
+
+
+Thank you,
+
+-Vic
