@@ -31,6 +31,9 @@ Resource allocation is an old and widely-solved problem in many fields, includin
 
 To name a few remarkable research examples to solve this type of problems, Dresner and Stone proposed s reservation system for autonomous intersection management \cite{dresner2008} to allocate right of road for crossing traffic, Perkins and Royer presented a novel routing algorithm for ad-hoc on-demand mobile nodes management \cite{perkins1999}, and Foster et al. came up with a reservation and allocation architecture for heterogeneous resource management in computer network. While they all addressed an elegant solution to a specific domain, most of the techniques cannot be easily transferred to similar decision problems in other domains. In this paper, we focus on addressing exactly this issue and forming a general resource allocation framework that is suitable to be solved by a reinforcement learning method.
 
+The first contribution of this paper is to form the Constrained Resource Allocation Framework (CRAF), in which we designed a generalized architecture to capture most of the resource allocation problems. In addition to the conventional first-come, first-served basis, we introduced the notion of constraints and queue propagation to reflect a more realistic setting and to relax more complicated systems into a single-frontier problem.
+
+Secondly, we defined a collection of analysis criteria and evaluation methods to both qualitatively and quantitatively study how a reinforcement learning algorithm perform on our framework. Lastly, we proposed three benchmark problems to empirically demonstrate how CRAF applies to different resource allocation problems consistently and effectively.
 
 \section{Background}
 K-armed bandit
@@ -98,6 +101,13 @@ Perkins, C. E., and Royer, E. M. (1999, February). Ad-hoc on-demand distance vec
 
 \bibitem{foster1999}
 Foster, I., Kesselman, C., Lee, C., Lindell, B., Nahrstedt, K., and Roy, A. (1999). A distributed resource management architecture that supports advance reservations and co-allocation. In \begin{em}Quality of Service, 1999. IWQoS'99. 1999 Seventh International Workshop on (pp. 27-36).\end{em} IEEE.
+
+\bibitem{baruah1996}
+Baruah, S. K., Cohen, N. K., Plaxton, C. G., and Varvel, D. A. (1996). Proportionate progress: A notion of fairness in resource allocation. \begin{em}Algorithmica\end{em}, 15(6), 600-625.
+
+\bibitem{thomas1990}
+Thomas, D. (1990). Intra-household resource allocation: An inferential approach. \begin{em}Journal of human resources\end{em}, 635-664.
+
 \end{thebibliography}
 
 
