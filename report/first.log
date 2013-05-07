@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  7 MAY 2013 17:19
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  7 MAY 2013 18:48
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -408,29 +408,30 @@ Before submitting the final camera ready copy, remember to:
 
 [2] (./first.aux) ) 
 Here is how much of TeX's memory you used:
- 4600 strings out of 493488
- 70879 string characters out of 3141326
- 139024 words of memory out of 3000000
- 7854 multiletter control sequences out of 15000+200000
- 34143 words of font info for 63 fonts, out of 3000000 for 9000
+ 4606 strings out of 493488
+ 70938 string characters out of 3141326
+ 140024 words of memory out of 3000000
+ 7857 multiletter control sequences out of 15000+200000
+ 35070 words of font info for 66 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
  44i,8n,42p,846b,297s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/base/8r.
-enc}</usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.p
-fb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pf
-b></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb>
-</usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></
-usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr
-/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/
-local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/lo
-cal/texlive/2012/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texliv
-e/2012/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2012/te
-xmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/f
-onts/type1/urw/times/utmri8a.pfb>
-Output written on first.pdf (2 pages, 121470 bytes).
+enc}</usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.p
+fb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pf
+b></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
+></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><
+/usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></u
+sr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/
+local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/l
+ocal/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/loc
+al/texlive/2012/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive
+/2012/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2012/tex
+mf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fo
+nts/type1/urw/times/utmri8a.pfb>
+Output written on first.pdf (2 pages, 130720 bytes).
 PDF statistics:
- 56 PDF objects out of 1000 (max. 8388607)
- 40 compressed objects within 1 object stream
+ 60 PDF objects out of 1000 (max. 8388607)
+ 43 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
