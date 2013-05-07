@@ -10,34 +10,66 @@
 \usepackage{eqparbox}
 \usepackage[font=footnotesize]{subfig}
 \usepackage{fixltx2e}
+\usepackage{setspace}
 
 \begin{document}
-
-\title{Resource Allocation}
+\onehalfspacing
+\title{A Reinforcement Learning Approach to the Constrained Resource Allocation Problem}
 
 \author{\IEEEauthorblockN{C. Vic Hu}
-\IEEEauthorblockA{vic@cvhu.org}
+\IEEEauthorblockA{Department of Electrical \& Computer Engineering\\University of Texas at Austin}
 }
 \maketitle
 
 \begin{abstract}
+	This paper proposes a generalized framework to solve constrained resource allocation problem using a modified reinforcement learning algorithm. 
 \end{abstract}
 
 %Motivate and abstractly describe the problem you are addressing and how you are addressing it. What is the problem? Why is it important? What is your basic approach? A short discussion of how it fits into related work in the area is also desirable. Summarize the basic results and conclusions that you will present. 
 \section{Introduction}
+Resource allocation is an old and widely-solved problem in many fields, including electrical engineering, computer science, economics, management science and many more. It typically involves a fixed number of resource units to be distributed to a set of tasks over a period of time, such as landing aircraft scheduling, wireless communication routing, social security welfare and shared resources in parallel computer architectures. The problems of resource allocating are ubiquitous, but they all essentially boil down to one simple notion--based on a set of criteria, how many resource units should be allocated to which task first, and for how long.
+
+To name a few remarkable research examples to solve this type of problems, Dresner and Stone proposed s reservation system for autonomous intersection management \cite{dresner2008} to allocate right of road for crossing traffic, Perkins and Royer presented a novel routing algorithm for ad-hoc on-demand mobile nodes management \cite{perkins1999}, and Foster et al. came up with a reservation and allocation architecture for heterogeneous resource management in computer network. While they all addressed an elegant solution to a specific domain, most of the techniques cannot be easily transferred to similar decision problems in other domains. In this paper, we focus on addressing exactly this issue and forming a general resource allocation framework that is suitable to be solved by a reinforcement learning method.
+
 
 \section{Background}
+K-armed bandit
+
+Adaptive K-Meteorologist
+
+Met-Rmax
+SCRAM-Rmax
+
 %Precisely define the problem you are addressing (i.e. formally specify the inputs and outputs). Elaborate on why this is an interesting and important problem. 
 
 %Describe in reasonable detail the algorithm you are using to address this problem. A psuedocode description of the algorithm you are using is frequently useful. Trace through a concrete example, showing how your algorithm processes this example. The example should be complex enough to illustrate all of the important aspects of the problem but simple enough to be easily understood. If possible, an intuitively meaningful example is better than one with meaningless symbols. 
-\section{The Framework}
+\section{The Constrained Resource Allocation Framework}
+Instance -> observables
+Constraints -> rewards
+Prototype
+Capacity -> resources available (treat each token as a multi-agent unit)
+Queue propagation (only solve the frontier instances at each round)
+
+failure handling
 
 
+properties:
+fairness
+progression
+safety
+liveness
+
+measurements:
+latency
+throughput
+rewards
 %What are criteria you are using to evaluate your method? What specific hypotheses does your experiment test? Describe the experimental methodology that you used. What are the dependent and independent variables? What is the training/test data that was used, and why is it realistic or interesting? Exactly what performance data did you collect and how are you presenting and analyzing it? Comparisons to competing methods that address the same problem are particularly useful. 
 
 %Present the quantitative results of your experiments. Graphical data presentation such as graphs and histograms are frequently better than tables. What are the basic differences revealed in the data. Are they statistically significant? 
 \section{Experiment Results}
-
+taxi sharing
+autonomous intersection management
+household welfare
 
 %Answer the following questions for each piece of related work that addresses the same or a similar problem. What is their problem and method? How is your problem and method different? Why is your problem and method better? 
 \section{Discussion and Related Work}
@@ -58,8 +90,14 @@
 
 %Be sure to include a standard, well-formated, comprehensive bibliography with citations from the text referring to previously published papers in the scientific literature that you utilized or are related to your work.
 \begin{thebibliography}{1}
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+\bibitem{dresner2008}
+Dresner, K. and Stone, P. A Multiagent Approach to Autonomous Intersection Management. \begin{em}Journal of Artificial Intelligence Research\end{em}, 31:591-656, March 2008.
+
+\bibitem{perkins1999}
+Perkins, C. E., and Royer, E. M. (1999, February). Ad-hoc on-demand distance vector routing. In \begin{em}Mobile Computing Systems and Applications, 1999. Proceedings. WMCSA'99. Second IEEE Workshop on (pp. 90-100).\end{em} IEEE.
+
+\bibitem{foster1999}
+Foster, I., Kesselman, C., Lee, C., Lindell, B., Nahrstedt, K., and Roy, A. (1999). A distributed resource management architecture that supports advance reservations and co-allocation. In \begin{em}Quality of Service, 1999. IWQoS'99. 1999 Seventh International Workshop on (pp. 27-36).\end{em} IEEE.
 \end{thebibliography}
 
 
