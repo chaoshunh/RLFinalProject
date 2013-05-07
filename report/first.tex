@@ -44,9 +44,14 @@ Unlike the Markov Decision Processes (MDPs) that most of the reinforcement learn
 
 Instead of trying to model a resource allocation problem as MDP, we found it more intuitive to formalize it as a multi-armed bandit problem, which has been extensively researched in the field of reinforcement learning \cite{auer2002}. Assuming that we can reasonably classify each incoming task candidate to one of the K prototypes, from which we use the approximated reward functions to determine which candidate receives the resource unit in each episode. Before we formalize our definitions and notations of the framework, let us go through some of the existing K-armed algorithms and see how they can be useful to the resource allocation problem.
 
-
 \subsection{The K-armed Bandit Problem}
+The problem is formalized by a fixed number of slot gambling machines, each defined by a random variable $X_{i,n}$, for $1\leq i \leq K$ and $n \geq 1$. A sequential $N$ plays of machine $i$ give rewards of $X_{i,1},\,X_{i,2},\dots,\, X_{i,N}$, which are all independent of each other and identically distributed. Based on the sequence of playing history and obtained rewards, one can form an allocation algorithm to pick the next machine. To evaluate the performance of such algorithms, one criterion, the $regret$, is defined as
 
+\begin{equation*}
+	regret = \mu^{*}\,n - \mu_j \sum_{j=1}^K E[T_j(n)]
+\end{equation*}
+
+where $\mu^{*} \equiv \max_{1\leq i \leq K} \mu_i$, $T_j(n)$ is the number of times machine $j$ has been played during the n plays. Therefore, $regret$ is essentially the expected loss function (opportunity cost) of the played allocation strategy.
 
 \subsection{The Adaptive K-Meteorologist Algorithm}
 
@@ -80,7 +85,7 @@ rewards
 %What are criteria you are using to evaluate your method? What specific hypotheses does your experiment test? Describe the experimental methodology that you used. What are the dependent and independent variables? What is the training/test data that was used, and why is it realistic or interesting? Exactly what performance data did you collect and how are you presenting and analyzing it? Comparisons to competing methods that address the same problem are particularly useful. 
 
 %Present the quantitative results of your experiments. Graphical data presentation such as graphs and histograms are frequently better than tables. What are the basic differences revealed in the data. Are they statistically significant? 
-\section{Experiment Results}
+\section{Experimental Results}
 taxi sharing
 autonomous intersection management
 household welfare
