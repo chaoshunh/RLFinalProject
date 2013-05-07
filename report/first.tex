@@ -14,7 +14,7 @@
 
 \begin{document}
 \onehalfspacing
-\title{A Reinforcement Learning Approach to the Constrained Resource Allocation Problem}
+\title{A Reinforcement Learning Approach to Constrained Resource Allocation Problems}
 
 \author{\IEEEauthorblockN{C. Vic Hu}
 \IEEEauthorblockA{Department of Electrical \& Computer Engineering\\University of Texas at Austin}
@@ -22,7 +22,9 @@
 \maketitle
 
 \begin{abstract}
-	This paper proposes a generalized framework to solve constrained resource allocation problem using a modified reinforcement learning algorithm. 
+Resource allocation has been extensively studied in various fields such as wireless communication, intelligent traffic routing, industrial management, parallel architectures and distributed systems. Although there have been many efficient and powerful algorithms proposed in each domains, very few of them is able to address more generalized resource allocation problems on a higher level.
+	
+This paper proposes a generalized framework and makes three main contributions to solving constrained resource allocation problem using a modified reinforcement learning algorithm. First, we designed a general architecture, Constrained Resource Allocation Framework (CRAF), for the ease of generalized problem mapping and learning. Second, we defined four properties and three measurements to both quantitatively and qualitatively analyze how well an algorithm performs in CRAF. Finally, we developed three benchmark experiments to demonstrate how a reinforcement algorithm can successfully solve very different resource allocating problems with CRAF.
 \end{abstract}
 
 %Motivate and abstractly describe the problem you are addressing and how you are addressing it. What is the problem? Why is it important? What is your basic approach? A short discussion of how it fits into related work in the area is also desirable. Summarize the basic results and conclusions that you will present. 
@@ -35,13 +37,22 @@ The first contribution of this paper is to form the Constrained Resource Allocat
 
 Secondly, we defined a collection of analysis criteria and evaluation methods to both qualitatively and quantitatively study how a reinforcement learning algorithm perform on our framework. Lastly, we proposed three benchmark problems to empirically demonstrate how CRAF applies to different resource allocation problems consistently and effectively.
 
+
 \section{Background}
-K-armed bandit
 
-Adaptive K-Meteorologist
+Unlike the Markov Decision Processes (MDPs) that most of the reinforcement learning algorithms are designed to solve, the notion of state representation, transition functions and reward functions in resource allocation problems such as aircraft landing scheduling can be very complex and challenging to define. Furthermore, the state space representing the entire global snapshot could be too large to be useful for effective learning. 
 
-Met-Rmax
-SCRAM-Rmax
+Instead of trying to model a resource allocation problem as MDP, we found it more intuitive to formalize it as a multi-armed bandit problem, which has been extensively researched in the field of reinforcement learning \cite{auer2002}. Assuming that we can reasonably classify each incoming task candidate to one of the K prototypes, from which we use the approximated reward functions to determine which candidate receives the resource unit in each episode. Before we formalize our definitions and notations of the framework, let us go through some of the existing K-armed algorithms and see how they can be useful to the resource allocation problem.
+
+
+\subsection{The K-armed Bandit Problem}
+
+
+\subsection{The Adaptive K-Meteorologist Algorithm}
+
+\subsection{Met-Rmax}
+
+\subsection{SCRAM-Rmax}
 
 %Precisely define the problem you are addressing (i.e. formally specify the inputs and outputs). Elaborate on why this is an interesting and important problem. 
 
@@ -107,6 +118,9 @@ Baruah, S. K., Cohen, N. K., Plaxton, C. G., and Varvel, D. A. (1996). Proportio
 
 \bibitem{thomas1990}
 Thomas, D. (1990). Intra-household resource allocation: An inferential approach. \begin{em}Journal of human resources\end{em}, 635-664.
+
+\bibitem{auer2002}
+Auer, P., Cesa-Bianchi, N. and Fischer, P. Finite-time Analysis of the Multiarmed Bandit Problem. In \begin{em} Proc. of 15th International Conference on Machine Learning, pages 100-108\end{em}. Morgan Kaufmann, 1998.
 
 \end{thebibliography}
 
