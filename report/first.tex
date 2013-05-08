@@ -52,52 +52,79 @@ The problem is formalized by a fixed number of slot gambling machines, each defi
 \end{equation*}
 
 where $\mu^{*} \equiv \max_{1\leq i \leq K} \mu_i$, $T_j(n)$ is the number of times machine $j$ has been played during the n plays. Therefore, $regret$ is essentially the expected loss function (opportunity cost) of the played allocation strategy.
-
-\subsection{The Adaptive K-Meteorologist Algorithm}
-One just moved to a new city with K TV news channels, what's the optimal strategy to determine the best meteorologist for weather prediction? Diuk et al.
-
-\subsection{Met-Rmax}
-
-\subsection{SCRAM-Rmax}
-
-\subsection{Gittins Index}
-
-\subsection{Thompson Sampling}
+%
+%\subsection{The Adaptive K-Meteorologist Algorithm}
+%One just moved to a new city with K TV news channels, what's the optimal strategy to determine the best meteorologist for weather prediction? Diuk et al.
+%
+%\subsection{Met-Rmax}
+%
+%\subsection{SCRAM-Rmax}
+%
+%\subsection{Gittins Index}
+%
+%\subsection{Thompson Sampling}
 
 %Precisely define the problem you are addressing (i.e. formally specify the inputs and outputs). Elaborate on why this is an interesting and important problem. 
 
 %Describe in reasonable detail the algorithm you are using to address this problem. A psuedocode description of the algorithm you are using is frequently useful. Trace through a concrete example, showing how your algorithm processes this example. The example should be complex enough to illustrate all of the important aspects of the problem but simple enough to be easily understood. If possible, an intuitively meaningful example is better than one with meaningless symbols. 
 \section{The Constrained Resource Allocation Framework}
 
-Formally, the Constrained Resource Allocation Framework (CRAF) consists of a sequential task instances, and a set of centralized learning agents who distribute resource unit to the task instances and receive rewards according to the decision they make. The task instances can come in one or more channels $\mathbf{x}_{c,i},\, 1\leq c \leq C,\, 1\leq i \leq capacity(c)$, where $i$ denotes the i-th instance and $c$ denotes the c-th channel.
+Formally, the Constrained Resource Allocation Framework (CRAF) consists of a sequential task instances, and a centralized learning agent who distributes resource units to the task instances and receives rewards according to the decision they make. The task instances can come in one or more channels $\mathbf{x}_{c,i},\, 1\leq c \leq C,\, 1\leq i \leq capacity(c)$, where $i$ denotes the i-th instance and $c$ denotes the c-th channel. To transform a resource allocation problem into a learnable framework, the formalization process under CRAF can be broke down into three phases:
+
+\begin{enumerate}
+	\item Housekeeping Phase
+	\begin{itemize}
+		\item Constraint
+		\item Objective
+	\end{itemize}
+	\item Tuning Phase
+	\begin{itemize}
+		\item Priority Score
+		\item Queue Propagation
+		\item Failure Capture
+	\end{itemize}
+	\item Prototyping Phase
+	\begin{itemize}
+		\item Prototype Classification
+		\item Reward Function
+	\end{itemize}
+\end{enumerate}
+
+\newpage
+
+%
+%Instance -> observables
+%Constraints -> rewards
+%Prototype
+%Capacity -> resources available (treat each token as a multi-agent unit)
+%Queue propagation (only solve the frontier instances at each round)
+%
+%failure handling
+%
+%
+%properties:
+%fairness
+%progression
+%safety
+%liveness
+%
+%measurements:
+%latency
+%throughput
+%rewards
 
 
-Instance -> observables
-Constraints -> rewards
-Prototype
-Capacity -> resources available (treat each token as a multi-agent unit)
-Queue propagation (only solve the frontier instances at each round)
-
-failure handling
-
-
-properties:
-fairness
-progression
-safety
-liveness
-
-measurements:
-latency
-throughput
-rewards
 %What are criteria you are using to evaluate your method? What specific hypotheses does your experiment test? Describe the experimental methodology that you used. What are the dependent and independent variables? What is the training/test data that was used, and why is it realistic or interesting? Exactly what performance data did you collect and how are you presenting and analyzing it? Comparisons to competing methods that address the same problem are particularly useful. 
 
 %Present the quantitative results of your experiments. Graphical data presentation such as graphs and histograms are frequently better than tables. What are the basic differences revealed in the data. Are they statistically significant? 
 \section{Experimental Results}
-taxi sharing
-autonomous intersection management
-household welfare
+1. 2-way intersection (simplest form)
+2. 4-way intersection (special corner cases)
+3. n-children candy distribution (multi-channel)
+%taxi sharing
+
+%autonomous intersection management
+%household welfare
 
 %Answer the following questions for each piece of related work that addresses the same or a similar problem. What is their problem and method? How is your problem and method different? Why is your problem and method better? 
 \section{Discussion and Related Work}
