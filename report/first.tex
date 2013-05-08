@@ -165,19 +165,19 @@ Formally, the Constrained Resource Allocation Framework (CRAF) consists of a seq
 \begin{enumerate}
 	\item Housekeeping Phase
 	\begin{itemize}
-		\item Constraint
-		\item Objective
+		\item \textbf{Constraint}: The instance $x_{c,i}$ needs a total of $num(x_{c,i})$ resource units before the deadline $exp(x_{c,i})$
+		\item \textbf{Objective}: A high-level criteria that the learning agent should achieve, which adds bias against the reward functions
 	\end{itemize}
 	\item Tuning Phase
 	\begin{itemize}
-		\item Priority Score
-		\item Queue Propagation
-		\item Failure Capture
+		\item \textbf{Priority Score}: $ps(x_{c,i})$, a function of both the \textbf{Constraint} and \textbf{Objective}
+		\item \textbf{Queue Propagation}: $qp(x_{c,i}) = \gamma qp(x_{c,i+1}) + \tau \,ct(x_{c,i})$ A linear combination of the current constraint and the same function from the next instance in queue
+		\item \textbf{Failure Capture}: If the current instance's constraint is impossible to be fulfilled or fails to respond, a \emph{reject} message will be sent and no further request from the same instance will be considered (so it will have to re-enter the queue)
 	\end{itemize}
 	\item Prototyping Phase
 	\begin{itemize}
-		\item Prototype Classification
-		\item Reward Function
+		\item \textbf{Prototype Classification}: Given a manually-chosen $K$, the current instance $x_{c,i}$ is classified into one of the $K$ clustering prototypes with respect to the two parameters obtained in the previous phase $ps(x_{c,i}),\, qp(x_{c,i})$
+		\item \textbf{Reward Function}: The learning agent receives a reward of $r_p+r_o$ if it fulfills the constraint of $x_{c,i}$, or $r_f-r_o$ otherwise
 	\end{itemize}
 \end{enumerate}
 
