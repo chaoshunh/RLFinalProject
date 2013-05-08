@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  8 MAY 2013 10:52
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  8 MAY 2013 12:23
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -409,33 +409,32 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 49.
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
-)
-Underfull \hbox (badness 10000) in paragraph at lines 97--98
+) [2]
+Underfull \hbox (badness 10000) in paragraph at lines 118--119
 
  []
 
 
-LaTeX Warning: Citation `selim1984' on page 2 undefined on input line 105.
+LaTeX Warning: Citation `selim1984' on page 3 undefined on input line 126.
 
-[2]
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 107.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 128.
 
- (/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+(/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 <fig/dendrogram.png, id=23, 801.99625pt x 500.87125pt>
 File: fig/dendrogram.png Graphic file (type png)
 
 <use fig/dendrogram.png>
-Package pdftex.def Info: fig/dendrogram.png used on input line 122.
+Package pdftex.def Info: fig/dendrogram.png used on input line 143.
 (pdftex.def)             Requested size: 180.60315pt x 112.79051pt.
-
-Underfull \hbox (badness 3407) in paragraph at lines 171--172
+ [3 <./fig/dendrogram.png (PNG copy)>]
+Underfull \hbox (badness 3407) in paragraph at lines 192--193
 \OML/cmm/m/it/10 num\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]\OT1/cmr/m/n/10 )$ \OT
 1/ptm/m/n/10 re-source units be-fore the dead-line
  []
 
-[3 <./fig/dendrogram.png (PNG copy)>]
+[4]
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -447,19 +446,21 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[4] (./first.aux)
+[5
+
+] (./first.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 4937 strings out of 493488
- 74773 string characters out of 3141326
+ 4941 strings out of 493488
+ 74825 string characters out of 3141326
  142503 words of memory out of 3000000
- 8159 multiletter control sequences out of 15000+200000
+ 8163 multiletter control sequences out of 15000+200000
  38391 words of font info for 77 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
- 44i,8n,42p,846b,297s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 44i,11n,42p,880b,297s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/te
 xlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/tex
@@ -476,10 +477,10 @@ ist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/
 type1/urw/times/utmbi8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw
 /times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb>
-Output written on first.pdf (4 pages, 175278 bytes).
+Output written on first.pdf (5 pages, 179788 bytes).
 PDF statistics:
- 79 PDF objects out of 1000 (max. 8388607)
- 56 compressed objects within 1 object stream
+ 82 PDF objects out of 1000 (max. 8388607)
+ 58 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

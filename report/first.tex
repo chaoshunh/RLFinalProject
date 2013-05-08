@@ -55,7 +55,28 @@ The problem is formalized by a fixed number of slot gambling machines, each defi
 \noindent where $\mu_i$ is the true mean of the generative distribution of $X_i$, and $\mu^{*} \equiv \max_{1\leq i \leq K} \mu_i$, $T_j(n)$ is the number of times machine $j$ has been played during the n plays. Therefore, $regret$ is essentially the expected loss function (opportunity cost) of the played allocation strategy. In reality we don't know the true $\mu_i$ of any slot machines, and thus we need a more empirical method to estimate the payoffs. However, $regret$ gives us an intuition about one of the fundamental problem the reinforcement learning is trying to solve--the dilemma between exploration and exploitation.
 
 \subsection{Balancing Exploration and Exploitation}
-As introduced in the previous section, $regret$ is a theoretical index to tell us how close we are from the optimal playing strategy in a K-armed bandit game. To play the optimal action of the game, the learning agent needs to build up a knowledge base of how well each action will pay off. The behavior of trying unknown or low confident actions is called \emph{exploration}. At certain point, the agent may decide it is confident enough to simply play the best action based on the learned knowledge so far, and that playing a suboptimal \emph{exploration} policy is not worthwhile. This idea of greedily choosing whatever is currently the best  is known as \emph{exploitation}.
+As introduced in the previous section, $regret$ is a theoretical index to tell us how close we are from the optimal playing strategy in a K-armed bandit game. To play the optimal action of the game, the learning agent needs to build up a knowledge base of how well each action will pay off. The behavior of trying unknown or low confident actions is called \emph{exploration}. At certain point, the agent may decide it is confident enough to simply play the best action based on the learned knowledge so far, and that playing a suboptimal \emph{exploration} policy is not worthwhile. This idea of greedily choosing whatever is currently the best is known as \emph{exploitation}. It is crucial that a learning agent need to balance both \emph{exploration} and \emph{exploitation} to find the optimal policy in almost any reinforcement learning settings. 
+
+To quantitatively describe how `good' an action is, we can define the action-value function prior to time step $t$ to be
+\begin{equation*}
+	Q_t(a) = \frac{\sum_{i=1}^{N_a}r_i}{N_a}
+\end{equation*}
+\noindent where $N_a$ is the number of times action $a$ was chosen prior to $t$. In other words, $Q_t(a)$ is the sampled arithmetic average of the rewards received so far, which approaches to the true action-value $Q^{*}(a)$ as $N_a \rightarrow \infty$. One straightforward policy is to always exploit the greedy action $a^* = \arg\max_{a} Q_t(a)$to maximize the immediate reward at time $t$ . To balance \emph{exploitation} with \emph{exploration}, here are a few alternative methods we will consider:
+
+\-\\
+\textbf{$\epsilon$-greedy}: The simplest way is to explore once in a while and to exploit greedy actions the rest of the time. In other words, we can formalize a policy function as the probability of playing action $a$ at time $t$:
+\begin{equation*}
+	\pi_t(a) = 
+	\begin{cases}
+		1-\epsilon, & \text{for }a=a^* = \arg\max_{a} Q_t(a)\\
+		\epsilon, & \text{choose any action randomly}
+	\end{cases}
+\end{equation*}
+
+Although $\epsilon$-greedy method does guarantee $N_a \rightarrow \infty$ as $t \rightarrow \infty$ and thus $Q_t(a) \rightarrow Q^*(a)$ in theory, it is definitely not the most efficient learning strategy in practice, especially the evaluative feedback is non-stationary , which is true in most decision learning processes. However, it is a popular and effective way to balance exploration and exploitation when augmented with more sophisticated algorithms.
+
+\-\\
+\textbf{Softmax}: Unlike the greedy policy which always choosesAlthough it still gives
 
 \subsection{Prototype Classification}
 
