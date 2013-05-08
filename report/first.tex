@@ -61,7 +61,21 @@ To quantitatively describe how `good' an action is, we can define the action-val
 \begin{equation*}
 	Q_t(a) = \frac{\sum_{i=1}^{N_a}r_i}{N_a}
 \end{equation*}
-\noindent where $N_a$ is the number of times action $a$ was chosen prior to $t$. In other words, $Q_t(a)$ is the sampled arithmetic average of the rewards received so far, which approaches to the true action-value $Q^{*}(a)$ as $N_a \rightarrow \infty$. One straightforward policy is to always exploit the greedy action $a^* = \arg\max_{a} Q_t(a)$to maximize the immediate reward at time $t$ . To balance \emph{exploitation} with \emph{exploration}, here are a few alternative methods we will consider:
+\noindent where $N_a$ is the number of times action $a$ was chosen prior to $t$. In other words, $Q_t(a)$ is the sampled arithmetic average of the rewards received so far, which approaches to the true action-value $Q^{*}(a)$ as $N_a \rightarrow \infty$. Alternatively, instead of keeping track of the entire history of rewards received $r_i,\, i \in \{1,\dots,N_a\}$ we can simply increment the current action-value toward the new one with a step-size parameter $\alpha$:
+\begin{equation*}
+	Q_{k+1} = Q_k + \alpha\,[r_{k+1} - Q_k]
+\end{equation*}
+When we choose $\alpha = \frac{1}{k+1}$, the action-value function falls back to:
+\begin{equation*}
+	Q_{k+1} = \frac{1}{k+1} \sum_{i=1}^{k+1}r_i
+\end{equation*}
+\noindent Which is exactly the original sampled average form. To guarantee a  general step-size $\alpha$ such that $\lim_{k\rightarrow \infty}Q_k = Q^*$, it follows that the steps must be large enough to encounter biased initial conditions and randomness, while it cannot be too large for the action-value function to converge eventually. Based on these intuitions, the following conditions must hold according to the stochastic approximation theory in \cite{bertsekas1996}:
+\begin{equation*}
+	\sum_{k=1}^\infty \alpha_k(a) = \infty \text{ and } \sum_{k=1}^\infty \alpha_k^2(a) < \infty
+\end{equation*}
+
+One straightforward policy is to always exploit the greedy action $a^* = \arg\max_{a} Q_t(a)$to maximize the immediate reward at time $t$ . To balance \emph{exploitation} with \emph{exploration}, here are a few alternative methods we will consider:
+
 
 \-\\
 \textbf{$\epsilon$-greedy}: The simplest way is to explore once in a while and to exploit greedy actions the rest of the time. In other words, we can formalize a policy function as the probability of playing action $a$ at time $t$:
@@ -76,7 +90,39 @@ To quantitatively describe how `good' an action is, we can define the action-val
 Although $\epsilon$-greedy method does guarantee $N_a \rightarrow \infty$ as $t \rightarrow \infty$ and thus $Q_t(a) \rightarrow Q^*(a)$ in theory, it is definitely not the most efficient learning strategy in practice, especially the evaluative feedback is non-stationary , which is true in most decision learning processes. However, it is a popular and effective way to balance exploration and exploitation when augmented with more sophisticated algorithms.
 
 \-\\
-\textbf{Softmax}: Unlike the greedy policy which always choosesAlthough it still gives
+\textbf{Softmax}: When exploring suboptimal actions, it makes more sense to choose risky action-values with lower probability, which intuitively blends in a little bit exploitation within the exploration itself. For instance, one may define the policy to be a probabilistic distribution in proportion to the action-values:
+\begin{equation*}
+	\pi_t(a) = \frac{e^{Q_t(a)/\tau}}{\sum_{\hat{a} \in A}e^{Q_t(\hat{a})/\tau}},\; \tau > 0
+\end{equation*}
+
+Notice that as the tuning parameter $\tau \rightarrow 0$, this softmax method is equivalent to the greedy policy, while higher $\tau$ leads to a more uniform action selection.
+
+
+\-\\
+\textbf{Reinforcement Comparison}:
+
+
+\begin{equation*}
+	p_{t+1}(a_t) = p_t(a_t) + \beta\,[r_t - \overline{r}_t],\, \beta > 0
+\end{equation*}
+
+\begin{equation*}
+	\overline{r}_{t+1} = \overline{r}_t + \alpha\,[r_t - \overline{r}_t]
+\end{equation*}
+
+\begin{equation*}
+	\pi_t(a) = \frac{e^{p_t(a)}}{\sum_{\hat{a} \in A}e^{p_t(\hat{a})}}
+\end{equation*}
+
+\-\\
+\textbf{Pursuit}: 
+\begin{equation*}
+	\pi_{t+1}(a) = 
+	\begin{cases}
+		\pi_{t}(a) + \beta\,\left[1-\pi_{t}(a)\right],& \text{for } a = a^*_{t+1}\\
+		\pi_{t}(a) + \beta\,\left[0-\pi_{t}(a)\right],& \text{for } a \neq a^*_{t+1}\\
+	\end{cases}
+\end{equation*}
 
 \subsection{Prototype Classification}
 
@@ -282,6 +328,9 @@ Auer, P., Cesa-Bianchi, N. and Fischer, P. Finite-time Analysis of the Multiarme
 
 \bibitem{diuk2009}
 Diuk, C., Li, L. and Leffler, B. R. The Adaptive k-Meteorologists Problem and Its Application to Structure Learning and Feature Selection in Reinforcement Learning. In \begin{em} Proceedings of the 26th International Conference of Machine Learning\end{em}. Montreal, Canada, 2009. 
+
+\bibitem{bertsekas1996}
+Bertsekas, D. P., and Tsitsiklis, J. N. (1996). Neuro-Dynamic Programming (Optimization and Neural Computation Series, 3). \begin{em}Athena Scientific\end{em}, 7, 15-23.
 
 \end{thebibliography}
 
