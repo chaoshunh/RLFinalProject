@@ -149,7 +149,56 @@ Notice that as the tuning parameter $\tau \rightarrow 0$, this softmax method is
 	\end{equation*}
 	\item Play action $a$ exactly $\tau(r_a + 1) - \tau(r_a)$ times
 	\item $r_a \leftarrow r_a + 1$
+	\item slowly decrease $\alpha$
 \end{enumerate}
+
+\-\\
+\textbf{$\epsilon_n$-greedy}: randomized policy ($\epsilon$ needs to go to 0)\\
+\emph{Initialization}: Define $\epsilon_n \in (0,1],\,n=1,2,\dots$
+\begin{equation*}
+	\epsilon_n = min\{1, \frac{cK}{d^2n}\}
+\end{equation*}
+\emph{For $n=1,2,\cdots$}: 
+\begin{enumerate}
+	\item Let $a_n = \arg\max_{a\in A} Q_n(a)$
+	\item Play with action selected according to policy:
+	\begin{equation*}
+		\pi_n(a) = 
+		\begin{cases}
+			1 - \epsilon_n, & \text{for } a_n\\
+			\epsilon_n, & random
+		\end{cases}
+	\end{equation*}
+\end{enumerate}
+
+
+\-\\
+\textbf{UCB1-NORMAL}: deterministic policy \\
+\emph{For $n=1,2,\cdots$}: 
+\begin{enumerate}
+	\item If $n_a < \lceil8\log{n}\rceil \; \forall a \in A$, play $a$
+	\item Otherwise, play
+	\begin{equation*}
+		a^{*}_n = \arg\max_{a \in A} Q_n(a) + \sqrt{16 \cdot \frac{q_a - n_a Q^2_n(a)}{n_a - 1} \cdot \frac{\ln(n-1)}{n_a}}
+	\end{equation*}
+	\noindent where $q_a$ is the sum of squared rewards from action $a$ so far.
+	\item Update $Q_n(a)$ and $q_a$ with the obtained reward
+\end{enumerate}
+
+
+%
+%\-\\
+%\textbf{UCB1-TUNED}: deterministic policy\\
+%\emph{Initialization}: play each action once\\
+%\emph{For each iteration}: play action $a^*$
+%\begin{equation*}
+%	a^*_t = \arg\max_{a \in A} Q_t(a) + \sqrt{\frac{\ln N}{N_a}\min\{1/4,V_a(N_a)\}}
+%\end{equation*}
+%
+%
+
+\-\\
+
 
 
 \subsection{Prototype Classification}
