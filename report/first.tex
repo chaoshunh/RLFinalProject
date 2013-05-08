@@ -99,23 +99,22 @@ Notice that as the tuning parameter $\tau \rightarrow 0$, this softmax method is
 
 
 \-\\
-\textbf{Reinforcement Comparison}:
-
-
-\begin{equation*}
-	p_{t+1}(a_t) = p_t(a_t) + \beta\,[r_t - \overline{r}_t],\, \beta > 0
-\end{equation*}
-
+\textbf{Reinforcement Comparison}: This method is based on a simple idea of ``preferring the good while avoiding the bad.'' Trivial and obvious as it sounds, we need to formalize our definitions of `preference' and `good/bad' to make this concept useful on a multi-armed bandit problem. First, we define the notion of the \emph{reference reward} at time $t$, $\overline{r}_t$:
 \begin{equation*}
 	\overline{r}_{t+1} = \overline{r}_t + \alpha\,[r_t - \overline{r}_t]
 \end{equation*}
+\noindent which is almost identical to the action-value function $Q_t$ we defined earlier, except that it is the incremental average of all the received rewards, regardless of the actions taken. Now we have the \emph{reference reward} to tell us what's the reward an average action should receive, we can establish our preference to an action based on its reward compared to the average:
+\begin{equation*}
+	p_{t+1}(a_t) = p_t(a_t) + \beta\,[r_t - \overline{r}_t],\, \beta > 0
+\end{equation*}
+\noindent which basically increases or decreases how much we prefer an action $a$ according to its reward, parameterized by another step-size parameter $\beta$. Finally, we can determine our policy just like the softmax method:
 
 \begin{equation*}
 	\pi_t(a) = \frac{e^{p_t(a)}}{\sum_{\hat{a} \in A}e^{p_t(\hat{a})}}
 \end{equation*}
 
 \-\\
-\textbf{Pursuit}: 
+\textbf{Pursuit}: The \emph{pursuit} method maintains both the action-value estimates $Q_t(a)$ for choosing the greedy action $a^*_t$ and the policy $\pi_t(a)$, which is updated by incrementing toward one and zero according to the following rule:
 \begin{equation*}
 	\pi_{t+1}(a) = 
 	\begin{cases}
