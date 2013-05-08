@@ -123,6 +123,35 @@ Notice that as the tuning parameter $\tau \rightarrow 0$, this softmax method is
 	\end{cases}
 \end{equation*}
 
+\-\\
+\textbf{More Advanced Algorithms}: More recently, Auer et al. proposed a new set of more sophisticated algorithms to solve the multi-armed bandit problem in finite time \cite{auer2002}. Here we list a few that we consider to implement on our framework. The details and analysis of these algorithms are beyond the scope of this paper, but we encourage the reader to refer to their original work \cite{auer2002}
+
+\-\\
+\textbf{UCB1}: deterministic policy\\
+\emph{Initialization}: play each action once\\
+\emph{For each iteration}: play action $a^*$
+\begin{equation*}
+	a^*_t = \arg\max_{a \in A} Q_t(a) + \sqrt{\frac{2\ln N}{N_a}}
+\end{equation*}
+\noindent where $Q_t(a)$ is computed as the sampled average reward, $N_a$ is the number of $a$ played so far, and $N$ is the total rounds played ($N = \sum_{a \in A} N_a$)
+
+\-\\
+\textbf{UCB2}: deterministic policy\\
+\emph{Initialization}: Set $r_a = 0\;\forall a \in A$ and play each action once\\
+\emph{For each iteration}: 
+\begin{enumerate}
+	\item Choose 
+	\begin{equation*}
+		a^* = \arg\max_{a \in A} Q_t(a) + \sqrt{\frac{(1 + \alpha)\ln(e N /\tau(r_a))}{2 \tau(r_a)}}
+	\end{equation*}
+	\begin{equation*}
+		\tau(x) = \lceil(1+\alpha)^x\rceil,\;0<\alpha<1
+	\end{equation*}
+	\item Play action $a$ exactly $\tau(r_a + 1) - \tau(r_a)$ times
+	\item $r_a \leftarrow r_a + 1$
+\end{enumerate}
+
+
 \subsection{Prototype Classification}
 
 
