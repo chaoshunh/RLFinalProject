@@ -11,6 +11,7 @@
 \usepackage[font=footnotesize]{subfig}
 \usepackage{fixltx2e}
 \usepackage{setspace}
+\usepackage{amssymb}
 
 \begin{document}
 \onehalfspacing
@@ -52,6 +53,96 @@ The problem is formalized by a fixed number of slot gambling machines, each defi
 \end{equation*}
 
 where $\mu^{*} \equiv \max_{1\leq i \leq K} \mu_i$, $T_j(n)$ is the number of times machine $j$ has been played during the n plays. Therefore, $regret$ is essentially the expected loss function (opportunity cost) of the played allocation strategy.
+
+\subsection{Prototype Classification}
+
+
+\subsubsection{Distance Functions}
+The idea of a particle is essentially a sampled instance of the topic distribution over a time sequence, represented by a vector $\mathbf{w}_i\in \mathbb{R}^{|V|},\; i \in \{1,\cdots,N\}$, where $|V|$ is the total vocabulary size of all the topic words appeared. Since one of our intermediate objectives is to formalize clusters between these particles, we need to first define how we will measure the similarity or distance between any pair of particles $\mathbf{w}_i,\; \mathbf{w}_j$. 
+
+\-\\
+\textbf{Minkowski}: 
+\begin{equation*}
+	d = \sqrt[p]{\sum_{k=1}^{|V|}|w_{ik} - w_{jk}|^p}
+\end{equation*}
+ Note that when $p=1$, the Minkowski reduces to the city block distance, while $p=2$ gives the Euclidean distance and $p=\infty$ yields the Chebychev distance.
+
+\-\\
+\textbf{Cosine}: 
+\begin{equation*}
+d = 1 - \frac{\mathbf{w}_i\,\mathbf{w}_j^T}{|\mathbf{w}_i|_2|\mathbf{w}_j|_2}
+\end{equation*}
+
+\-\\
+\textbf{Correlation}: 
+\begin{equation*}
+d = 1 - \frac{(\mathbf{w}_i - \overline{\mathbf{w}}_i)(\mathbf{w}_j - \overline{\mathbf{w}}_j)^T}{|(\mathbf{w}_i - \overline{\mathbf{w}}_i)|_2|(\mathbf{w}_j - \overline{\mathbf{w}}_j)|_2}
+\end{equation*}
+
+where 
+\begin{equation*}
+	\overline{\mathbf{w}}_i = \frac{1}{|V|}\sum_{k=1}^{|V|}w_{ik},\;
+	\overline{\mathbf{w}}_j = \frac{1}{|V|}\sum_{k=1}^{|V|}w_{jk}
+\end{equation*}
+
+\-\\
+\textbf{Jaccard}: 
+\begin{equation*}
+	d = \frac{\# \left[(w_{ik} \neq w_{jk})\cap((w_{ik} \neq 0)\cup(w_{jk} \neq 0))\right]}{\#\left[(w_{ik} \neq 0)\cup(w_{jk} \neq 0)\right]}
+\end{equation*}
+
+\-\\
+
+\subsubsection{Clustering Algorithms}
+LDA is essentially pulling out the `principal components' from the text documents, reducing a large archive of data into just $K$ representative topics $\mathbf{\beta}_{1:K}$. Therefore, our assumption is that by grouping similar particles induced from past topics, we can observe the clustering patterns and make reasonable predictions on how the future topics will be like.
+
+Now we have a collection of well-defined distance functions, we can start looking at clustering methods to group our particles together accordingly, and here are a set of common clustering algorithms we will consider:
+
+\-\\
+\textbf{K-Means:} As the name itself suggests, the K-Means clustering algorithm consists of K cluster centroids and moves these means iteratively towards the center of its closest neighbors, until they no longer change. Although K-Means has been proved to be guaranteed for convergence \cite{selim1984}, its clustering performance is often correlated to how the seeds are initialized at the beginning, and the optimal choice of $K$ is often not apparent (in our case, it is the same as the number of topics.)
+
+\begin{verbatim}
+1. Initialize the means by picking 
+   K samples at random
+2. Iterate
+2.a. Assign each instance to 
+     its nearest mean
+2.b. Move the current means to 
+	 the center of all the 
+	 associated points
+\end{verbatim}
+\-\\
+\textbf{Hierarchical Agglomerative Clustering (HAC):} This algorithm starts with treating every instances as individual cluster, and iteratively joins pairs of similar clusters repeatedly until there is only one. If we take the merging history and form a hierarchical binary tree, it will look like the dendrogram in Fig.~\ref{dendrogram}.
+
+\begin{figure}[h]
+	\center	
+	\includegraphics[width=0.35\textwidth]{fig/dendrogram.png}
+	\caption{A sample dendrogram by HAC}
+	\label{dendrogram}
+\end{figure}
+
+Although we have defined the distance functions in the previous section, we have yet formalized the similarity functions between clusters. In our method, we will focus on the following four similarity functions:
+
+\begin{itemize}
+	\item \textbf{Single-linkage:} Also known as the nearest neighbor, computes the distance between the two closest elements from two clusters
+	\item \textbf{Complete-linkage:} The conjugate of \textbf{single-linkage}, also known as the farthest neighbor, computes the distance between the two farthest elements (maximum distance) from two clusters
+	\item \textbf{UPGMA: } Unweighted Pair Group Method with Averaging calculates the distance between two clusters, $C_i \& C_j$, by averaging all distances between any pair of objects from the two clusters.
+	\begin{equation*}
+		dist(C_i, C_j) = \frac{1}{|C_i||C_j|}\sum_{w_i \in C_i}\sum_{w_j \in C_j}dist(w_i, w_j)
+	\end{equation*}
+	Now, let's call this newly-formed cluster $C_{ij}$ and compare its distance with another cluster $C_k$:
+	\begin{equation*}
+		dist(C_{ij}, C_k) =  \frac{|C_i|dist(c_i,c_k) + |C_j|dist(c_j,c_k)}{|C_i|+|C_j|}
+	\end{equation*}
+	where $c_i,\,c_j,\,c_k$ are the centroids for clusters $C_i,\;C_j,\;C_k$
+	\item \textbf{WPGMA} Weighted Pair Group Method with Averaging is similar to UPGMA except that the cluster distance is now calculated as:
+	\begin{equation*}
+		dist(C_{ij}, C_k) =  \frac{dist(c_i,c_k) + dist(c_j,c_k)}{2}
+	\end{equation*}
+\end{itemize}
+
+ The behavior of HAC is often dominated by the chosen similarity function. While each variant has a different set of clustering patterns it is good at capturing, all of them have certain vulnerabilities. 
+
 %
 %\subsection{The Adaptive K-Meteorologist Algorithm}
 %One just moved to a new city with K TV news channels, what's the optimal strategy to determine the best meteorologist for weather prediction? Diuk et al.
