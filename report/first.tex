@@ -52,7 +52,10 @@ The problem is formalized by a fixed number of slot gambling machines, each defi
 	regret = \mu^{*}\,n - \mu_j \sum_{j=1}^K E[T_j(n)]
 \end{equation*}
 
-where $\mu^{*} \equiv \max_{1\leq i \leq K} \mu_i$, $T_j(n)$ is the number of times machine $j$ has been played during the n plays. Therefore, $regret$ is essentially the expected loss function (opportunity cost) of the played allocation strategy.
+\noindent where $\mu_i$ is the true mean of the generative distribution of $X_i$, and $\mu^{*} \equiv \max_{1\leq i \leq K} \mu_i$, $T_j(n)$ is the number of times machine $j$ has been played during the n plays. Therefore, $regret$ is essentially the expected loss function (opportunity cost) of the played allocation strategy. In reality we don't know the true $\mu_i$ of any slot machines, and thus we need a more empirical method to estimate the payoffs. However, $regret$ gives us an intuition about one of the fundamental problem the reinforcement learning is trying to solve--the dilemma between exploration and exploitation.
+
+\subsection{Balancing Exploration and Exploitation}
+As introduced in the previous section, $regret$ is a theoretical index to tell us how close we are from the optimal playing strategy in a K-armed bandit game. To play the optimal action of the game, the learning agent needs to build up a knowledge base of how well each action will pay off. The behavior of trying unknown or low confident actions is called \emph{exploration}. At certain point, the agent may decide it is confident enough to simply play the best action based on the learned knowledge so far, and that playing a suboptimal \emph{exploration} policy is not worthwhile. This idea of greedily choosing whatever is currently the best  is known as \emph{exploitation}.
 
 \subsection{Prototype Classification}
 
@@ -180,6 +183,8 @@ Formally, the Constrained Resource Allocation Framework (CRAF) consists of a seq
 		\item \textbf{Reward Function}: The learning agent receives a reward of $r_p+r_o$ if it fulfills the constraint of $x_{c,i}$, or $r_f-r_o$ otherwise
 	\end{itemize}
 \end{enumerate}
+
+Now we have formed the $K$ prototypes, we can have the resource allocating agent learn to choose from the channel frontiers just like in the multiarmed bandit problem.
 
 \newpage
 
