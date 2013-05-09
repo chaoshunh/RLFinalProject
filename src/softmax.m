@@ -1,4 +1,4 @@
-function R = softmax(tau, X, K)
+function [R, AR, QR] =  softmax(tau, X, K)
 Q = zeros(1,K);
 N = size(X,2);
 C = size(X,1);
@@ -26,13 +26,3 @@ for t = 1:N
     R(t) = rew;
     QR(t,:) = Q;
 end
-figure
-plot(R)
-
-figure
-plot(AR)
-
-figure
-plot(QR)
-
-plotA(AR)

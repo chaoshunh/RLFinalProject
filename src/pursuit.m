@@ -1,4 +1,4 @@
-function R = pursuit(alpha, beta, X, K)
+function [R, AR, QR] =  pursuit(alpha, beta, X, K)
 Q = zeros(1,K);
 p = 1/K*ones(1,K);
 N = size(X,2);
@@ -38,14 +38,6 @@ for t = 1:N
     R(t) = rew;
     QR(t,:) = Q;
 end
-figure
-plot(R)
-
-figure
-plot(AR)
-
-figure
-plot(QR)
 
 function a = pSelect(p, A)
 i = find(rand(1) < cumsum(p(A)));

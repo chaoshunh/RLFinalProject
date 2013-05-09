@@ -1,4 +1,4 @@
-function ucb1_normal(alpha, X, K)
+function [R, AR, QR] = ucb1_normal(alpha, X, K)
 N = size(X,2);
 C = size(X,1);
 
@@ -40,14 +40,6 @@ for t = 1:N
     R(t) = rew;
     QR(t,:) = Q;
 end
-figure
-plot(R)
-
-figure
-plot(AR)
-
-figure
-plot(QR)
 
 function a = argmaxUCB1Normal(Q, A, N_a, q_a)
 up = q_a(A) - N_a(A).*(Q(A).^2);

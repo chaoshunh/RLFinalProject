@@ -1,4 +1,4 @@
-function R = reinforcementComparison(alpha, beta, X, K)
+function [R, AR, QR] =  reinforcementComparison(alpha, beta, X, K)
 p = zeros(1,K);
 N = size(X,2);
 C = size(X,1);
@@ -29,15 +29,3 @@ for t = 1:N
     QR(t,:) = p;
     
 end
-
-figure
-plot(R)
-
-figure
-plot(AR)
-
-figure
-plot(QR)
-
-figure
-plotA(AR)
