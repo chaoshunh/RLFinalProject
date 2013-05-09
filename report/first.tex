@@ -156,7 +156,7 @@ Notice that as the tuning parameter $\tau \rightarrow 0$, this softmax method is
 \textbf{$\epsilon_n$-greedy}: randomized policy ($\epsilon$ needs to go to 0)\\
 \emph{Initialization}: Define $\epsilon_n \in (0,1],\,n=1,2,\dots$
 \begin{equation*}
-	\epsilon_n = min\{1, \frac{cK}{d^2n}\}
+	\epsilon_n = min\{1, \frac{cK}{d^2n}\},\; c > 0 \text{ and }0 < d < 1 
 \end{equation*}
 \emph{For $n=1,2,\cdots$}: 
 \begin{enumerate}
