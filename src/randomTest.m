@@ -6,10 +6,9 @@ function X = randomTest(C, N, K)
 
 X = zeros(C,N,3); 
 
-for n = 1:N
-    cluster = randperm(K);
+for n = 1:N    
     for c = 1:C
-        i = cluster(c);
+        i = ceil(K*rand());
         pr = i + 0.01*randn();
         nr = -pr/C;
         X(c,n,1) = i;
