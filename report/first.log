@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  11 MAY 2013 15:41
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  11 MAY 2013 17:26
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -315,7 +315,11 @@ Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 96.
 ))
-(./first.aux)
+(./first.aux
+
+LaTeX Warning: Label `sutton_candy_qr' multiply defined.
+
+)
 \openout1 = `first.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
@@ -330,8 +334,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
 LaTeX Font Info:    ... okay on input line 16.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
 LaTeX Font Info:    ... okay on input line 16.
-
-(/usr/local/texlive/2012/texmf-dist/tex/context/base/supp-pdf.mkii
+ (/usr/local/texlive/2012/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count119
 \scratchdimen=\dimen146
@@ -460,111 +463,87 @@ Overfull \hbox (3.57542pt too wide) in paragraph at lines 336--350
 [][] 
  []
 
-<fig/kmeans_dists.png, id=34, 561.09625pt x 420.57124pt>
+[6] <fig/kmeans_dists.png, id=37, 561.09625pt x 420.57124pt>
 File: fig/kmeans_dists.png Graphic file (type png)
 
 <use fig/kmeans_dists.png>
-Package pdftex.def Info: fig/kmeans_dists.png used on input line 406.
+Package pdftex.def Info: fig/kmeans_dists.png used on input line 407.
 (pdftex.def)             Requested size: 206.39685pt x 154.70407pt.
- [6]
+
 <fig/hac_dists.png, id=38, 561.09625pt x 420.57124pt>
 File: fig/hac_dists.png Graphic file (type png)
  <use fig/hac_dists.png>
-Package pdftex.def Info: fig/hac_dists.png used on input line 413.
+Package pdftex.def Info: fig/hac_dists.png used on input line 414.
 (pdftex.def)             Requested size: 258.0pt x 193.3817pt.
 
-Overfull \hbox (6.0pt too wide) in paragraph at lines 413--414
+Overfull \hbox (6.0pt too wide) in paragraph at lines 414--415
  [] 
  []
 
 <fig/hac_links.png, id=39, 561.09625pt x 420.57124pt>
 File: fig/hac_links.png Graphic file (type png)
  <use fig/hac_links.png>
-Package pdftex.def Info: fig/hac_links.png used on input line 420.
+Package pdftex.def Info: fig/hac_links.png used on input line 421.
 (pdftex.def)             Requested size: 206.39685pt x 154.70407pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
 
 <fig/sutton_candy_r.png, id=40, 561.09625pt x 420.57124pt>
 File: fig/sutton_candy_r.png Graphic file (type png)
 
 <use fig/sutton_candy_r.png>
-Package pdftex.def Info: fig/sutton_candy_r.png used on input line 429.
+Package pdftex.def Info: fig/sutton_candy_r.png used on input line 430.
 (pdftex.def)             Requested size: 154.80157pt x 116.02644pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
 
 <fig/sutton_candy_qr.png, id=41, 561.09625pt x 420.57124pt>
 File: fig/sutton_candy_qr.png Graphic file (type png)
 
 <use fig/sutton_candy_qr.png>
-Package pdftex.def Info: fig/sutton_candy_qr.png used on input line 437.
+Package pdftex.def Info: fig/sutton_candy_qr.png used on input line 439.
 (pdftex.def)             Requested size: 206.39685pt x 154.70407pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
 
 <fig/ucb_candy_r.png, id=42, 561.09625pt x 420.57124pt>
 File: fig/ucb_candy_r.png Graphic file (type png)
 
 <use fig/ucb_candy_r.png>
-Package pdftex.def Info: fig/ucb_candy_r.png used on input line 444.
+Package pdftex.def Info: fig/ucb_candy_r.png used on input line 448.
 (pdftex.def)             Requested size: 154.80157pt x 116.02644pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
 
 <fig/ucb_candy_qr.png, id=43, 561.09625pt x 420.57124pt>
 File: fig/ucb_candy_qr.png Graphic file (type png)
 
 <use fig/ucb_candy_qr.png>
-Package pdftex.def Info: fig/ucb_candy_qr.png used on input line 452.
+Package pdftex.def Info: fig/ucb_candy_qr.png used on input line 456.
 (pdftex.def)             Requested size: 206.39685pt x 154.70407pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<fig/sutton_random_r.png, id=44, 561.09625pt x 420.57124pt>
+ [7 <./fig/kmeans_dists.png (PNG copy)> <./fig/hac_dists.png (PNG copy)> <./fig
+/hac_links.png (PNG copy)> <./fig/sutton_candy_r.png (PNG copy)>] <fig/sutton_r
+andom_r.png, id=48, 561.09625pt x 420.57124pt>
 File: fig/sutton_random_r.png Graphic file (type png)
 
 <use fig/sutton_random_r.png>
-Package pdftex.def Info: fig/sutton_random_r.png used on input line 463.
+Package pdftex.def Info: fig/sutton_random_r.png used on input line 469.
 (pdftex.def)             Requested size: 154.80157pt x 116.02644pt.
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<fig/sutton_random_qr.png, id=45, 561.09625pt x 420.57124pt>
+<fig/sutton_random_qr.png, id=49, 561.09625pt x 420.57124pt>
 File: fig/sutton_random_qr.png Graphic file (type png)
 
 <use fig/sutton_random_qr.png>
-Package pdftex.def Info: fig/sutton_random_qr.png used on input line 471.
+Package pdftex.def Info: fig/sutton_random_qr.png used on input line 479.
 (pdftex.def)             Requested size: 206.39685pt x 154.70407pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<fig/ucb_random_r.png, id=46, 561.09625pt x 420.57124pt>
+ [8 <./fig/sutton_candy_qr.png (PNG copy)> <./fig/ucb_candy_r.png (PNG copy)> <
+./fig/ucb_candy_qr.png (PNG copy)> <./fig/sutton_random_r.png (PNG copy)> <./fi
+g/sutton_random_qr.png (PNG copy)>]
+<fig/ucb_random_r.png, id=53, 561.09625pt x 420.57124pt>
 File: fig/ucb_random_r.png Graphic file (type png)
 
 <use fig/ucb_random_r.png>
-Package pdftex.def Info: fig/ucb_random_r.png used on input line 478.
+Package pdftex.def Info: fig/ucb_random_r.png used on input line 489.
 (pdftex.def)             Requested size: 154.80157pt x 116.02644pt.
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<fig/ucb_random_qr.png, id=47, 561.09625pt x 420.57124pt>
+<fig/ucb_random_qr.png, id=54, 561.09625pt x 420.57124pt>
 File: fig/ucb_random_qr.png Graphic file (type png)
 
 <use fig/ucb_random_qr.png>
-Package pdftex.def Info: fig/ucb_random_qr.png used on input line 486.
+Package pdftex.def Info: fig/ucb_random_qr.png used on input line 497.
 (pdftex.def)             Requested size: 206.39685pt x 154.70407pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 ** Conference Paper **
@@ -577,20 +556,19 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[7 <./fig/kmeans_dists.png (PNG copy)> <./fig/hac_dists.png (PNG copy)> <./fig/
-hac_links.png (PNG copy)> <./fig/sutton_candy_r.png (PNG copy)>] [8 <./fig/sutt
-on_candy_qr.png (PNG copy)> <./fig/ucb_candy_r.png (PNG copy)> <./fig/ucb_candy
-_qr.png (PNG copy)> <./fig/sutton_random_r.png (PNG copy)> <./fig/sutton_random
-_qr.png (PNG copy)> <./fig/ucb_random_r.png (PNG copy)> <./fig/ucb_random_qr.pn
-g (PNG copy)>] (./first.aux)
+[9 <./fig/ucb_random_r.png (PNG copy)> <./fig/ucb_random_qr.png (PNG copy)>]
+(./first.aux)
 
 LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
  5012 strings out of 493488
  76344 string characters out of 3141326
- 143605 words of memory out of 3000000
+ 143645 words of memory out of 3000000
  8223 multiletter control sequences out of 15000+200000
  38391 words of font info for 77 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
@@ -611,10 +589,10 @@ ist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/
 type1/urw/times/utmbi8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw
 /times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb>
-Output written on first.pdf (8 pages, 293678 bytes).
+Output written on first.pdf (9 pages, 298183 bytes).
 PDF statistics:
- 104 PDF objects out of 1000 (max. 8388607)
- 66 compressed objects within 1 object stream
+ 107 PDF objects out of 1000 (max. 8388607)
+ 68 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  61 words of extra memory for PDF output out of 10000 (max. 10000000)
 

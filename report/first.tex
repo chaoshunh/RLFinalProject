@@ -391,6 +391,7 @@ To quantitatively analyze a resource allocating algorithm, we introduced the fol
 %Present the quantitative results of your experiments. Graphical data presentation such as graphs and histograms are frequently better than tables. What are the basic differences revealed in the data. Are they statistically significant? 
 \section{Experimental Results}
 
+\subsection{Candy Distribution}
 In this section, we propose an example testing bed to demonstrate how exactly CRAF works in a straightforward problem. Suppose it's the desert break in a kindergarden and there are $C$ lines of children (channel), but only one teacher distributing the candies. There are constantly children coming inside the classroom and waiting in a random line for the candy. Each child has different patience and desire for the candy, which impact how happy they will be when receiving the candy. The teacher is trying to maximize the total amount of happiness in the classroom.
 
 In this problem, we define the i-th child in line $c$ as a task instance, $x_{i,c}$, which has two constraints--one for their desire, $c_1(x_{i,c})$, and the other for their patience, $c_2(x_{i,c})$. In this case, the objective is to maximize children's happiness, which will be embedded in the reward function. That's all for \emph{Phase One}. We've defined our constraints and objective, and now let's pass these variables to the next phase.
@@ -401,45 +402,48 @@ Finally in \emph{Phase Three}, we apply one of the clustering algorithms and dis
 
 In Fig.~\ref{kmeans_dists}, ~\ref{hac_dists}, and ~\ref{hac_links}, we compared how clustering algorithms with different variations impact the outcome of the candy distribution example. For the K-Means algorithm, we experimented with the Minkowski-2 (Euclidean), Minkowski-1 (city block), cosine, and correlation distance functions. As shown in Fig.~\ref{kmeans_dists}, all flavors of the K-Means yield a fairly consistent distribution, with a majority in one big clusters and many smaller ones. For the Hierarchical Agglomerative  Clustering (HAC) algorithms comparisons in Fig.~\ref{hac_dists}, however, we found that the correlation distance function gave us only one cluster, while the others consistently resulted in two comparable ones. For the linkage function comparisons in Fig.~\ref{hac_links}, single linkage method appears to be cleaner and more deterministic about the two-cluster pattern, compared to the other linkage methods. 
 
-\begin{figure}[h]
+\begin{figure}
 	\center	
 	\includegraphics[width=0.4\textwidth]{fig/kmeans_dists.png}
 	\caption{A histogram to compare the effects of using different distance functions in K-Means. The column stands for $K=10$ topics, while each color represents the number of corresponding instances in each channel.}
 	\label{kmeans_dists}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}
 	\center	
 	\includegraphics[width=0.5\textwidth]{fig/hac_dists.png}
 	\caption{A histogram to compare the effects of using different distance functions in HAC. The column stands for $K=10$ topics, while each color represents the number of corresponding instances in each channel.}
 	\label{hac_dists}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}
 	\center	
 	\includegraphics[width=0.4\textwidth]{fig/hac_links.png}
 	\caption{A histogram to compare the effects of using different linkage functions in HAC. The column stands for $K=10$ topics, while each color represents the number of corresponding instances in each channel.}
 	\label{hac_links}
 \end{figure}
 
-Now we have the clustering results, we can leave the rest to our k-armed bandit algorithms. In Fig.~\ref{sutton_candy_r}, 
+Now we have the clustering results, we can leave the rest to our k-armed bandit algorithms. In Fig.~\ref{sutton_candy_r}, we compared the accumulated rewards obtained from the candy distribution example by the four basic algorithms we introduced earlier--$\epsilon$-greedy, softmax, reinforcement comparison, and pursuit. We can see that the pursuit method generally has a poorer performance than the other three. 
 
-\begin{figure}[h]
+\begin{figure}
 	\center	
 	\includegraphics[width=0.3\textwidth]{fig/sutton_candy_r.png}
 	\caption{The rewards obtained by the $\epsilon$-greedy, Softmax, Reinforcement Comparison, and Pursuit methods on the candy distribution problem}
 	\label{sutton_candy_r}
 \end{figure}
 
+In Fig.~\ref{sutton_candy_qr}, we demonstrated the estimated action-value, $Q_t(a)$, where the action is equivalent to the chosen $k$. Softmax (top right) has the most smooth estimation, which also shows a lack of exploration. 
 
-\begin{figure}[h]
+\begin{figure}
 	\center	
 	\includegraphics[width=0.4\textwidth]{fig/sutton_candy_qr.png}
-	\caption{The estimated action-value functions by the $\epsilon$-greedy, Softmax, Reinforcement Comparison, and Pursuit methods on the candy distribution problem}
+	\caption{The estimated action-value functions obtained by the $\epsilon$-greedy, Softmax, Reinforcement Comparison, and Pursuit methods on the candy distribution problem}
 	\label{sutton_candy_qr}
 \end{figure}
 
-\begin{figure}[h]
+Now we look at the learning curve obtained with the UCB algorithm family--the UCB1, UCB2, $\epsilon_n$-greedy, and UCB1-Normal algorithms. In Fig.~\ref{ucb_candy_r}, we can observe almost identical learning curves for UCB1 and UCB1-Normal. Note that the learning curve for UCB2 is always zero, which is most likely resulted from an implementation error. The estimated action-value functions are fairly similar among the UCB1, $\epsilon_n$-greedy, and UCB1-Normal methods as shown in Fig.~\ref{ucb_candy_qr}.
+
+\begin{figure}
 	\center	
 	\includegraphics[width=0.3\textwidth]{fig/ucb_candy_r.png}
 	\caption{The rewards obtained by the UCB1, UCB2, $\epsilon_n$-greedy, and UCB1-NORMAL methods on the candy distribution problem}
@@ -447,7 +451,7 @@ Now we have the clustering results, we can leave the rest to our k-armed bandit 
 \end{figure}
 
 
-\begin{figure}[h]
+\begin{figure}
 	\center	
 	\includegraphics[width=0.4\textwidth]{fig/ucb_candy_qr.png}
 	\caption{The estimated action-value functions obtained by the UCB1, UCB2, $\epsilon_n$-greedy, and UCB1-NORMAL methods on the candy distribution problem}
@@ -455,39 +459,48 @@ Now we have the clustering results, we can leave the rest to our k-armed bandit 
 \end{figure}
 
 
+\subsection{Randomized Test}
+Besides the candy distribution testbed, we tested the K-armed bandit algorithms on a separate benchmark to generalize our results. In this testbed, we created $C$ channels of instances with randomly-generated prototype numbers and the corresponding rewards. In this case, the positive reward function, $pr = k + \mathbf{N}(0,0.01)$, is defined to be proportional to the prototype index $k$ with a small gaussian noise. The negative reward function, $nr = - \frac{pr}{C}$, is a scaled negative of $pr$.
 
+In Fig.~\ref{sutton_random_r}, we experimented the four basic algorithms again and found that the pursuit method still underperforms the others. Moreover, we can now see a clear distinction that softmax has the highest accumulated rewards overall, followed by the reinforcement comparison method, and then the $\epsilon$-greedy. 
 
-
-\begin{figure}[h]
+\begin{figure}
 	\center	
 	\includegraphics[width=0.3\textwidth]{fig/sutton_random_r.png}
-	\caption{}
+	\caption{The rewards obtained by the $\epsilon$-greedy, Softmax, Reinforcement Comparison, and Pursuit methods on the randomized testbed}
 	\label{sutton_random_r}
 \end{figure}
 
+The performance in Fig.~\ref{sutton_random_r} can be reasonably explained when we look at the estimated action-value functions in Fig.~\ref{sutton_random_qr}. Softmax has a clean distinction between the action-values but again demonstrated a sign of lack of exploration. On the other hand, we can see a fair amount of exploration for both the $\epsilon$-greedy and pursuit algorithms, which can be demonstrated from their more accurate value estimations. Nonetheless, they don't seem to be able to catch up the optimal strategy quickly enough to compete with softmax.
 
-\begin{figure}[h]
+
+\begin{figure}
 	\center	
 	\includegraphics[width=0.4\textwidth]{fig/sutton_random_qr.png}
-	\caption{}
+	\caption{The estimated action-value functions obtained by the $\epsilon$-greedy, Softmax, Reinforcement Comparison, and Pursuit methods on the randomized testbed}
+	\label{sutton_candy_qr}
 	\label{sutton_random_qr}
 \end{figure}
 
-\begin{figure}[h]
+With the UCB algorithms in Fig.~\ref{ucb_random_r}, the differences between the UCB1, UCB-Normal, and $\epsilon_n$-greedy methods become more clear as well; we can see that UCB1 quickly picked up the optimal strategy and stayed there, while UCB1-Normal and $\epsilon_n$-greedy seems to spend more time exploring other options. We can see that UCB1-Normal does have an uprising learning curve during its exploration, which demonstrates its ability to effectively balance exploitation and exploration.
+
+\begin{figure}
 	\center	
 	\includegraphics[width=0.3\textwidth]{fig/ucb_random_r.png}
-	\caption{}
+	\caption{The rewards obtained by the UCB1, UCB2, $\epsilon_n$-greedy, and UCB1-NORMAL methods on the randomized testbed}
 	\label{ucb_random_r}
 \end{figure}
 
+In Fig.~\ref{ucb_random_qr}, a similar correlation between the learning curve and 
 
-\begin{figure}[h]
+\begin{figure}
 	\center	
 	\includegraphics[width=0.4\textwidth]{fig/ucb_random_qr.png}
-	\caption{}
+	\caption{The estimated action-value functions obtained by the UCB1, UCB2, $\epsilon_n$-greedy, and UCB1-NORMAL methods on the randomized testbed}
 	\label{ucb_random_qr}
 \end{figure}
 
+\newpage
 
 %1. 2-way intersection (simplest form)
 %2. 4-way intersection (special corner cases)
