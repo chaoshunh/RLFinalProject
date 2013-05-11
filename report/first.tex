@@ -491,7 +491,9 @@ With the UCB algorithms in Fig.~\ref{ucb_random_r}, the differences between the 
 	\label{ucb_random_r}
 \end{figure}
 
-In Fig.~\ref{ucb_random_qr}, a similar correlation between the learning curve and 
+In Fig.~\ref{ucb_random_qr}, we can see that UCB1 shows a monotone pattern on the high action-values, which is similar to the softmax in Fig.~\ref{sutton_random_qr}. The $\epsilon_n$-greedy and UCB1-Normal have a relatively better estimation due to their ability to balance exploitation with exploration.
+
+Overall, we observed a similar correlation between the learning curve of a k-armed bandit algorithm and its ability to correctly estimate true action-value functions in both the candy distribution and random testbeds.
 
 \begin{figure}
 	\center	
@@ -519,13 +521,14 @@ In Fig.~\ref{ucb_random_qr}, a similar correlation between the learning curve an
 
 %Briefly summarize the important results and conclusions presented in the paper. What are the most important points illustrated by your work? How will your results improve future research and applications in the area? 
 \section{Conclusion}
-
+In this paper, we proposed a generalized resource allocation framework to be solved as a classic K-armed bandit problem in reinforcement learning. We demonstrated two simple benchmark domains and compared the results learned by a collection of K-armed bandit algorithms. Our experimental results reinforced the relations of exploitation and exploration tradeoff, and fortified a new concept to solve resource allocation problem in the reinforcement learning fashion.
 
 %What are the major shortcomings of your current method? For each shortcoming, propose additions or enhancements that would help overcome it. 
 \section{Future Work}
 
 
 \section{Acknowledgements}
+We really appreciate Professor Stone's knowledgable guidance and tremendous patience with this project. This work will not be possible without him.
 
 %Be sure to include a standard, well-formated, comprehensive bibliography with citations from the text referring to previously published papers in the scientific literature that you utilized or are related to your work.
 \begin{thebibliography}{1}
