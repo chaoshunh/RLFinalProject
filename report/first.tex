@@ -307,30 +307,49 @@ Although we have defined the distance functions in the previous section, we have
 %Describe in reasonable detail the algorithm you are using to address this problem. A psuedocode description of the algorithm you are using is frequently useful. Trace through a concrete example, showing how your algorithm processes this example. The example should be complex enough to illustrate all of the important aspects of the problem but simple enough to be easily understood. If possible, an intuitively meaningful example is better than one with meaningless symbols. 
 \section{The Constrained Resource Allocation Framework}
 
-Formally, the Constrained Resource Allocation Framework (CRAF) consists of a sequential task instances, and a centralized learning agent who distributes resource units to the task instances and receives rewards according to the decision they make. The task instances can come in one or more channels $\mathbf{x}_{c,i},\, 1\leq c \leq C,\, 1\leq i \leq capacity(c)$, where $i$ denotes the i-th instance and $c$ denotes the c-th channel. To transform a resource allocation problem into a learnable framework, the formalization process under CRAF can be broke down into three phases:
+Formally, the Constrained Resource Allocation Framework (CRAF) consists of a sequence of task instances, and a centralized learning agent who distributes resource units to the task instances and receives rewards according to the decision they make. The task instances can come in one or more channels $\mathbf{x}_{c,i},\, 1\leq c \leq C,\, 1\leq i \leq capacity(c)$, where $i$ denotes the i-th instance and $c$ denotes the c-th channel. To transform a resource allocation problem into a learnable framework, the formalization process under CRAF can be broke down into three phases:
 
 \begin{enumerate}
-	\item Housekeeping Phase
+	\item Phase One
 	\begin{itemize}
 		\item \textbf{Constraint}: The instance $x_{c,i}$ needs a total of $num(x_{c,i})$ resource units before the deadline $exp(x_{c,i})$
 		\item \textbf{Objective}: A high-level criteria that the learning agent should achieve, which adds bias against the reward functions
 	\end{itemize}
-	\item Tuning Phase
+	\item Phase Two
 	\begin{itemize}
 		\item \textbf{Priority Score}: $ps(x_{c,i})$, a function of both the \textbf{Constraint} and \textbf{Objective}
 		\item \textbf{Queue Propagation}: $qp(x_{c,i}) = \gamma qp(x_{c,i+1}) + \tau \,ct(x_{c,i})$ A linear combination of the current constraint and the same function from the next instance in queue
-		\item \textbf{Failure Capture}: If the current instance's constraint is impossible to be fulfilled or fails to respond, a \emph{reject} message will be sent and no further request from the same instance will be considered (so it will have to re-enter the queue)
+		\item \textbf{Feature Selection}: Use the relevant features to augment the instance $x_{c,i}$ into a feature vector in a higher dimensional space. Domain knowledge may help reduce the dimensionality.
 	\end{itemize}
-	\item Prototyping Phase
+	\item Phase Three
 	\begin{itemize}
 		\item \textbf{Prototype Classification}: Given a manually-chosen $K$, the current instance $x_{c,i}$ is classified into one of the $K$ clustering prototypes with respect to the two parameters obtained in the previous phase $ps(x_{c,i}),\, qp(x_{c,i})$
 		\item \textbf{Reward Function}: The learning agent receives a reward of $r_p+r_o$ if it fulfills the constraint of $x_{c,i}$, or $r_f-r_o$ otherwise
 	\end{itemize}
 \end{enumerate}
 
-Now we have formed the $K$ prototypes, we can have the resource allocating agent learn to choose from the channel frontiers just like in the multiarmed bandit problem.
+Now we formed the $K$ prototypes, we can have the resource allocating agent learn to choose from the channel frontiers just like in the multi-armed bandit problem. For each round, the agent faces a total of $C$ channels, while each channel has a number of instance tasks waiting to be processed. The agent is given the prototype number, $k$, of the first instance (frontier) of each channel, and it has to choose which frontier to give its resource for that round based on $k$. Unlike the traditional K-armed bandit problem, there are only a subset of $K$ presented at a time if $C < K$. Furthermore, Each channel frontier doesn't necessarily have distinct $k$, which the agent break the tie randomly after deciding which $k$ to choose from the available subset. The pseudo code of this algorithm can be found in Table.~\ref{pseudo_code}.
 
-\newpage
+
+\begin{table}[h]
+%	\centering
+	\begin{tabular}{r | p{7.5cm}}
+		Step & Instruction\\
+		\hline
+		\hline
+		1 & For each time step $n$\\
+		\hline
+		2 & $K_n = \{K(x_{1,c}),\,c=1,\dots,C\}$\\
+		  & //Observe the prototypes of all the available channel frontiers as the resource candidates\\
+		\hline
+		3 & $k_* = bandit(K_n)$\\
+		  & //Choose the optimal candidate instance to give the resource by solving a k-armed bandit problem \\
+		\hline
+		4 & Ready for the next round\\
+	\end{tabular}
+	\caption{Pseudo code for the frontier choosing algorithm in CRAF. }
+	\label{pseudo_code}
+\end{table}
 
 %
 %Instance -> observables
@@ -342,12 +361,21 @@ Now we have formed the $K$ prototypes, we can have the resource allocating agent
 %failure handling
 %
 %
-%properties:
-%fairness
-%progression
-%safety
-%liveness
-%
+
+To examine how well an algorithm solves a general resource allocation problem, we proposed the following properties:
+
+\begin{itemize}
+\item \textbf{Safety}: One resource cannot be shared by more than one task instance at a time.
+\item \textbf{Fairness}: Task instances with higher priority scores should always be served first. 
+\item \textbf{Progression}: Every task instance should get the resource in bounded and finite time.
+\end{itemize}
+
+To quantitatively analyze a resource allocating algorithm, we introduced the following measurement criteria:
+\begin{itemize}
+\item \textbf{Latency}
+\item \textbf{Throughput}
+\item \textbf{Rewards}
+\end{itemize}
 %measurements:
 %latency
 %throughput
@@ -358,6 +386,9 @@ Now we have formed the $K$ prototypes, we can have the resource allocating agent
 
 %Present the quantitative results of your experiments. Graphical data presentation such as graphs and histograms are frequently better than tables. What are the basic differences revealed in the data. Are they statistically significant? 
 \section{Experimental Results}
+
+
+
 1. 2-way intersection (simplest form)
 2. 4-way intersection (special corner cases)
 3. n-children candy distribution (multi-channel)

@@ -17,5 +17,3 @@ for n = 1:N
         X(c,n,3) = nr;
     end
 end
-
-

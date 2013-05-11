@@ -6,3 +6,9 @@ function X = twoWayTraffic(N, K)
 
 X = zeros(2,N,3); 
 
+for n = 1:N
+
+end
+
+
+function [] = oneWayTraffic(alpha, n)
