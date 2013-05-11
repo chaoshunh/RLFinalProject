@@ -393,7 +393,100 @@ To quantitatively analyze a resource allocating algorithm, we introduced the fol
 
 In this section, we propose an example testing bed to demonstrate how exactly CRAF works in a straightforward problem. Suppose it's the desert break in a kindergarden and there are $C$ lines of children (channel), but only one teacher distributing the candies. There are constantly children coming inside the classroom and waiting in a random line for the candy. Each child has different patience and desire for the candy, which impact how happy they will be when receiving the candy. The teacher is trying to maximize the total amount of happiness in the classroom.
 
-In this problem, we define the i-th child in line $c$ as a task instance, $x_{i,c}$, which has two constraints--one for their desire, $c_1(x_{i,c})$, and the other for their patience, $c_2(x_{i,c})$. 
+In this problem, we define the i-th child in line $c$ as a task instance, $x_{i,c}$, which has two constraints--one for their desire, $c_1(x_{i,c})$, and the other for their patience, $c_2(x_{i,c})$. In this case, the objective is to maximize children's happiness, which will be embedded in the reward function. That's all for \emph{Phase One}. We've defined our constraints and objective, and now let's pass these variables to the next phase.
+
+In \emph{Phase Two}, we need to map the constraints and objective functions we defined in the previous phase into a set of normalized features for clustering. Here, we introduced two more features--$c_3(x_{i,c}) = \sum_{n = i}^{|C_c|}\#x_{i,c}$, the number of children behind $x_{i,c}$, and $c_4(x_{i,c}) = \sum_{c \in C}\#x_{i,c}$, the number of frontiers competing at the front of every lines. Now we have these two new features in addition to the two we introduced in \emph{Phase One}, we normalize these four parameters and pass them to \emph{Phase Three} for clustering.
+
+Finally in \emph{Phase Three}, we apply one of the clustering algorithms and distance functions we mentioned earlier to group these parameterized instances into $K$ clusters. Furthermore, we define the reward function of choosing channel $m$ to be $R(m) = pr(m) + \sum_{j \neq m}nr(j)$, which consists of a positive reward received from the chosen channel and the negative rewards given by the rest of missed channels. To simplify our model, we define $pr(j) = c_1(x_{i,j}) + c_2(x_{i,j})$ and $nr(j) = -0.1\, c_1(x_{i,j})\times c_2(x_{i,j})$. Note that we intentionally make up a convoluted reward function that is not linear, and leave $c_3,\,c_4$ completely independent to the reward to examine the learning agent's ability to discover this nontrivial pattern. 
+
+In Fig.~\ref{kmeans_dists}, ~\ref{hac_dists}, and ~\ref{hac_links}, we compared how clustering algorithms with different variations impact the outcome of the candy distribution example. For the K-Means algorithm, we experimented with the Minkowski-2 (Euclidean), Minkowski-1 (city block), cosine, and correlation distance functions. As shown in Fig.~\ref{kmeans_dists}, all flavors of the K-Means yield a fairly consistent distribution, with a majority in one big clusters and many smaller ones. For the Hierarchical Agglomerative  Clustering (HAC) algorithms comparisons in Fig.~\ref{hac_dists}, however, we found that the correlation distance function gave us only one cluster, while the others consistently resulted in two comparable ones. For the linkage function comparisons in Fig.~\ref{hac_links}, single linkage method appears to be cleaner and more deterministic about the two-cluster pattern, compared to the other linkage methods. 
+
+\begin{figure}[h]
+	\center	
+	\includegraphics[width=0.4\textwidth]{fig/kmeans_dists.png}
+	\caption{A histogram to compare the effects of using different distance functions in K-Means. The column stands for $K=10$ topics, while each color represents the number of corresponding instances in each channel.}
+	\label{kmeans_dists}
+\end{figure}
+
+\begin{figure}[h]
+	\center	
+	\includegraphics[width=0.5\textwidth]{fig/hac_dists.png}
+	\caption{A histogram to compare the effects of using different distance functions in HAC. The column stands for $K=10$ topics, while each color represents the number of corresponding instances in each channel.}
+	\label{hac_dists}
+\end{figure}
+
+\begin{figure}[h]
+	\center	
+	\includegraphics[width=0.4\textwidth]{fig/hac_links.png}
+	\caption{A histogram to compare the effects of using different linkage functions in HAC. The column stands for $K=10$ topics, while each color represents the number of corresponding instances in each channel.}
+	\label{hac_links}
+\end{figure}
+
+Now we have the clustering results, we can leave the rest to our k-armed bandit algorithms. In Fig.~\ref{sutton_candy_r}, 
+
+\begin{figure}[h]
+	\center	
+	\includegraphics[width=0.3\textwidth]{fig/sutton_candy_r.png}
+	\caption{The rewards obtained by the $\epsilon$-greedy, Softmax, Reinforcement Comparison, and Pursuit methods on the candy distribution problem}
+	\label{sutton_candy_r}
+\end{figure}
+
+
+\begin{figure}[h]
+	\center	
+	\includegraphics[width=0.4\textwidth]{fig/sutton_candy_qr.png}
+	\caption{The estimated action-value functions by the $\epsilon$-greedy, Softmax, Reinforcement Comparison, and Pursuit methods on the candy distribution problem}
+	\label{sutton_candy_qr}
+\end{figure}
+
+\begin{figure}[h]
+	\center	
+	\includegraphics[width=0.3\textwidth]{fig/ucb_candy_r.png}
+	\caption{The rewards obtained by the UCB1, UCB2, $\epsilon_n$-greedy, and UCB1-NORMAL methods on the candy distribution problem}
+	\label{ucb_candy_r}
+\end{figure}
+
+
+\begin{figure}[h]
+	\center	
+	\includegraphics[width=0.4\textwidth]{fig/ucb_candy_qr.png}
+	\caption{The estimated action-value functions obtained by the UCB1, UCB2, $\epsilon_n$-greedy, and UCB1-NORMAL methods on the candy distribution problem}
+	\label{ucb_candy_qr}
+\end{figure}
+
+
+
+
+
+\begin{figure}[h]
+	\center	
+	\includegraphics[width=0.3\textwidth]{fig/sutton_random_r.png}
+	\caption{}
+	\label{sutton_random_r}
+\end{figure}
+
+
+\begin{figure}[h]
+	\center	
+	\includegraphics[width=0.4\textwidth]{fig/sutton_random_qr.png}
+	\caption{}
+	\label{sutton_random_qr}
+\end{figure}
+
+\begin{figure}[h]
+	\center	
+	\includegraphics[width=0.3\textwidth]{fig/ucb_random_r.png}
+	\caption{}
+	\label{ucb_random_r}
+\end{figure}
+
+
+\begin{figure}[h]
+	\center	
+	\includegraphics[width=0.4\textwidth]{fig/ucb_random_qr.png}
+	\caption{}
+	\label{ucb_random_qr}
+\end{figure}
 
 
 %1. 2-way intersection (simplest form)
@@ -405,7 +498,7 @@ In this problem, we define the i-th child in line $c$ as a task instance, $x_{i,
 %household welfare
 
 %Answer the following questions for each piece of related work that addresses the same or a similar problem. What is their problem and method? How is your problem and method different? Why is your problem and method better? 
-\section{Discussion and Related Work}
+%\section{Discussion and Related Work}
 
 
 
