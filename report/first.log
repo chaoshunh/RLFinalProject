@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  11 MAY 2013 17:44
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  11 MAY 2013 17:51
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -544,7 +544,7 @@ File: fig/ucb_random_qr.png Graphic file (type png)
 <use fig/ucb_random_qr.png>
 Package pdftex.def Info: fig/ucb_random_qr.png used on input line 500.
 (pdftex.def)             Requested size: 206.39685pt x 154.70407pt.
-
+ [9 <./fig/ucb_random_r.png (PNG copy)> <./fig/ucb_random_qr.png (PNG copy)>]
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -556,8 +556,9 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[9 <./fig/ucb_random_r.png (PNG copy)> <./fig/ucb_random_qr.png (PNG copy)>]
-(./first.aux)
+[10
+
+] (./first.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -589,10 +590,10 @@ ist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/
 type1/urw/times/utmbi8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw
 /times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb>
-Output written on first.pdf (9 pages, 298990 bytes).
+Output written on first.pdf (10 pages, 299665 bytes).
 PDF statistics:
- 107 PDF objects out of 1000 (max. 8388607)
- 68 compressed objects within 1 object stream
+ 110 PDF objects out of 1000 (max. 8388607)
+ 70 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  61 words of extra memory for PDF output out of 10000 (max. 10000000)
 
