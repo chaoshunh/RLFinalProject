@@ -40,5 +40,10 @@ for t = 1:N
 end
 
 function a = pSelect(p, A)
-i = find(rand(1) < cumsum(p(A)));
+cs = cumsum(p(unique(A)));
+cs = 1/cs(length(cs))*cs;
+i = find(rand(1) < cs);
+if(length(i)==0)
+    keyboard
+end
 a = i(1);

@@ -41,7 +41,7 @@ for t = 1:N
 end
 
 function a = argmaxUCB2(Q, A, N_a, r_a, alpha)
-obj = Q(A) + sqrt((1+alpha)/2*tau(r_a, alpha).^(-1).*log(exp(1)*sum(N_a)*tau(r_a, alpha).^(-1)));
+obj = Q(A) + sqrt((1+alpha)/2*tau(r_a(A), alpha).^(-1).*log(exp(1)*sum(N_a)*tau(r_a(A), alpha).^(-1)));
 [~, I] = max(obj);
 i = randi(length(I), 1);
 a = I(i);

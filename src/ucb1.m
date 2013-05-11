@@ -35,6 +35,6 @@ for t = 1:N
 end
 
 function a = argmaxUCB1(Q, A, N_a)
-[~, I] = max(Q(A) + sqrt(2*log(sum(N_a))*N_a.^(-1)));
+[~, I] = max(Q(A) + sqrt(2*log(sum(N_a))*N_a(A).^(-1)));
 i = randi(length(I), 1);
 a = I(i);
