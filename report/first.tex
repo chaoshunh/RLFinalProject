@@ -370,12 +370,16 @@ To examine how well an algorithm solves a general resource allocation problem, w
 \item \textbf{Progression}: Every task instance should get the resource in bounded and finite time.
 \end{itemize}
 
+The algorithm we proposed satisfies the \emph{safety} property since the resource is controlled by a centralized allocating agent, and thus no more than one task instance may share the same resource at any time. However, the \emph{fairness} and \emph{progression} properties of CRAF depend on which K-armed bandit algorithm is chosen.
+
 To quantitatively analyze a resource allocating algorithm, we introduced the following measurement criteria:
 \begin{itemize}
-\item \textbf{Latency}
-\item \textbf{Throughput}
-\item \textbf{Rewards}
+\item \textbf{Latency}: The average time each task instance has to wait in line (channel).
+\item \textbf{Throughput}: The average number of task instances processed in a period of time.
+\item \textbf{Rewards}: The average reward accumulated in a period of time.
 \end{itemize}
+
+
 %measurements:
 %latency
 %throughput
@@ -387,11 +391,14 @@ To quantitatively analyze a resource allocating algorithm, we introduced the fol
 %Present the quantitative results of your experiments. Graphical data presentation such as graphs and histograms are frequently better than tables. What are the basic differences revealed in the data. Are they statistically significant? 
 \section{Experimental Results}
 
+In this section, we propose an example testing bed to demonstrate how exactly CRAF works in a straightforward problem. Suppose it's the desert break in a kindergarden and there are $C$ lines of children (channel), but only one teacher distributing the candies. There are constantly children coming inside the classroom and waiting in a random line for the candy. Each child has different patience and desire for the candy, which impact how happy they will be when receiving the candy. The teacher is trying to maximize the total amount of happiness in the classroom.
+
+In this problem, we define the i-th child in line $c$ as a task instance, $x_{i,c}$, which has two constraints--one for their desire, $c_1(x_{i,c})$, and the other for their patience, $c_2(x_{i,c})$. 
 
 
-1. 2-way intersection (simplest form)
-2. 4-way intersection (special corner cases)
-3. n-children candy distribution (multi-channel)
+%1. 2-way intersection (simplest form)
+%2. 4-way intersection (special corner cases)
+%3. n-children candy distribution (multi-channel)
 %taxi sharing
 
 %autonomous intersection management
