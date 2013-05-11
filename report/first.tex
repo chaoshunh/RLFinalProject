@@ -32,18 +32,20 @@ This paper proposes a generalized framework and makes three main contributions t
 \section{Introduction}
 Resource allocation is an old and widely-solved problem in many fields, including electrical engineering, computer science, economics, management science and many more. It typically involves a fixed number of resource units to be distributed to a set of tasks over a period of time, such as landing aircraft scheduling, wireless communication routing, social security welfare and shared resources in parallel computer architectures. The problems of resource allocating are ubiquitous, but they all essentially boil down to one simple notion--based on a set of criteria, how many resource units should be allocated to which task first, and for how long.
 
-To name a few remarkable research examples to solve this type of problems, Dresner and Stone proposed s reservation system for autonomous intersection management \cite{dresner2008} to allocate right of road for crossing traffic, Perkins and Royer presented a novel routing algorithm for ad-hoc on-demand mobile nodes management \cite{perkins1999}, and Foster et al. came up with a reservation and allocation architecture for heterogeneous resource management in computer network. While they all addressed an elegant solution to a specific domain, most of the techniques cannot be easily transferred to similar decision problems in other domains. In this paper, we focus on addressing exactly this issue and forming a general resource allocation framework that is suitable to be solved by a reinforcement learning method.
+To name a few remarkable research examples to solve this type of problems, Dresner and Stone proposed s reservation system for autonomous intersection management \cite{dresner2008} to allocate right of road for crossing traffics, Perkins and Royer presented a novel routing algorithm for ad-hoc on-demand mobile nodes management \cite{perkins1999}, and Foster et al. came up with a reservation and allocation architecture for heterogeneous resource management in computer network. While they all addressed an elegant solution to a specific domain, most of the techniques cannot be easily transferred to similar decision problems in other domains. In this paper, we focus on addressing exactly this issue and forming a general resource allocation framework that is suitable to be solved by a reinforcement learning method.
 
 The first contribution of this paper is to form the Constrained Resource Allocation Framework (CRAF), in which we designed a generalized architecture to capture most of the resource allocation problems. In addition to the conventional first-come, first-served basis, we introduced the notion of constraints and queue propagation to reflect a more realistic setting and to relax more complicated systems into a single-frontier problem.
 
-Secondly, we defined a collection of analysis criteria and evaluation methods to both qualitatively and quantitatively study how a reinforcement learning algorithm perform on our framework. Lastly, we proposed three benchmark problems to empirically demonstrate how CRAF applies to different resource allocation problems consistently and effectively.
+Secondly, we defined a collection of analysis criteria and evaluation methods to both qualitatively and quantitatively study how a reinforcement learning algorithm perform on our framework. Lastly, we proposed two benchmark problems to empirically demonstrate how CRAF applies to different resource allocation problems consistently and effectively.
+
+In section 2, we briefly introduce the background knowledge to prepare the general readers to understand our terminologies, including the K-armed bandit problem in reinforcement learning and the clustering algorithms we will compare with. In section 3, we explain the CRAF itself and the intuitions for design and measurements. In section 4, two examples are tested and analyzed. Finally, we make conclusion and propose future improvements in section 5 and 6.
 
 
 \section{Background}
 
-Unlike the Markov Decision Processes (MDPs) that most of the reinforcement learning algorithms are designed to solve, the notion of state representation, transition functions and reward functions in resource allocation problems such as aircraft landing scheduling can be very complex and challenging to define. Furthermore, the state space representing the entire global snapshot could be too large to be useful for effective learning. 
+Unlike the Markov Decision Processes (MDPs) that most of the reinforcement learning algorithms are designed to solve, the notion of state representation, transition functions and reward functions in resource allocation problems can be very complex and challenging to define. Furthermore, the state space for representing the entire global snapshot could be too large to be useful for effective learning. 
 
-Instead of trying to model a resource allocation problem as MDP, we found it more intuitive to formalize it as a multi-armed bandit problem, which has been extensively researched in the field of reinforcement learning \cite{auer2002}. Assuming that we can reasonably classify each incoming task candidate to one of the K prototypes, from which we use the approximated reward functions to determine which candidate receives the resource unit in each episode. Before we formalize our definitions and notations of the framework, let us go through some of the existing K-armed algorithms and see how they can be useful to the resource allocation problem.
+Instead of trying to model a resource allocation problem as MDP, we found it more intuitive to formalize it as a K-armed bandit problem, which has been extensively researched in the field of reinforcement learning \cite{auer2002}. Assuming that we can reasonably classify each incoming task candidate to one of the K prototypes, from which we use the approximated reward functions to determine which candidate receives the resource unit in each episode. Before we formalize our definitions and notations of the framework, let us go through some of the existing K-armed algorithms and see how they can be useful to the resource allocation problem.
 
 \subsection{The K-armed Bandit Problem}
 The problem is formalized by a fixed number of slot gambling machines, each defined by a random variable $X_{i,n}$, for $1\leq i \leq K$ and $n \geq 1$. A sequential $N$ plays of machine $i$ give rewards of $X_{i,1},\,X_{i,2},\dots,\, X_{i,N}$, which are all independent of each other and identically distributed. Based on the sequence of playing history and obtained rewards, one can form an allocation algorithm to pick the next machine. To evaluate the performance of such algorithms, one criterion, the $regret$, is defined as
@@ -52,16 +54,16 @@ The problem is formalized by a fixed number of slot gambling machines, each defi
 	regret = \mu^{*}\,n - \mu_j \sum_{j=1}^K E[T_j(n)]
 \end{equation*}
 
-\noindent where $\mu_i$ is the true mean of the generative distribution of $X_i$, and $\mu^{*} \equiv \max_{1\leq i \leq K} \mu_i$, $T_j(n)$ is the number of times machine $j$ has been played during the n plays. Therefore, $regret$ is essentially the expected loss function (opportunity cost) of the played allocation strategy. In reality we don't know the true $\mu_i$ of any slot machines, and thus we need a more empirical method to estimate the payoffs. However, $regret$ gives us an intuition about one of the fundamental problem the reinforcement learning is trying to solve--the dilemma between exploration and exploitation.
+\noindent where $\mu_i$ is the true mean of the generative distribution of $X_i$, and $\mu^{*} \equiv \max_{1\leq i \leq K} \mu_i$, $T_j(n)$ is the number of times machine $j$ has been played during the n plays\cite{auer2002}. Therefore, $regret$ is essentially the expected loss function (opportunity cost) of the played allocation strategy. In reality we don't know the true $\mu_i$ of any slot machines, and thus we need a more empirical method to estimate the payoffs. However, $regret$ gives us an intuition about one of the fundamental problems the reinforcement learning is trying to solve--the dilemma between exploration and exploitation.
 
 \subsection{Balancing Exploration and Exploitation}
 As introduced in the previous section, $regret$ is a theoretical index to tell us how close we are from the optimal playing strategy in a K-armed bandit game. To play the optimal action of the game, the learning agent needs to build up a knowledge base of how well each action will pay off. The behavior of trying unknown or low confident actions is called \emph{exploration}. At certain point, the agent may decide it is confident enough to simply play the best action based on the learned knowledge so far, and that playing a suboptimal \emph{exploration} policy is not worthwhile. This idea of greedily choosing whatever is currently the best is known as \emph{exploitation}. It is crucial that a learning agent need to balance both \emph{exploration} and \emph{exploitation} to find the optimal policy in almost any reinforcement learning settings. 
 
-To quantitatively describe how `good' an action is, we can define the action-value function prior to time step $t$ to be
+To quantitatively describe how `good' an action is, we can define the action-value function \cite{thathachar1985} prior to time step $t$ to be
 \begin{equation*}
 	Q_t(a) = \frac{\sum_{i=1}^{N_a}r_i}{N_a}
 \end{equation*}
-\noindent where $N_a$ is the number of times action $a$ was chosen prior to $t$. In other words, $Q_t(a)$ is the sampled arithmetic average of the rewards received so far, which approaches to the true action-value $Q^{*}(a)$ as $N_a \rightarrow \infty$. Alternatively, instead of keeping track of the entire history of rewards received $r_i,\, i \in \{1,\dots,N_a\}$ we can simply increment the current action-value toward the new one with a step-size parameter $\alpha$:
+\noindent where $N_a$ is the number of times action $a$ was chosen prior to $t$\cite{sutton1998}. In other words, $Q_t(a)$ is the sampled arithmetic average of the rewards received so far, which approaches to the true action-value $Q^{*}(a)$ as $N_a \rightarrow \infty$. Alternatively, instead of keeping track of the entire history of rewards received $r_i,\, i \in \{1,\dots,N_a\}$ we can simply increment the current action-value toward the new one with a step-size parameter $\alpha$:
 \begin{equation*}
 	Q_{k+1} = Q_k + \alpha\,[r_{k+1} - Q_k]
 \end{equation*}
@@ -78,7 +80,7 @@ One straightforward policy is to always exploit the greedy action $a^* = \arg\ma
 
 
 \-\\
-\textbf{$\epsilon$-greedy}: The simplest way is to explore once in a while and to exploit greedy actions the rest of the time. In other words, we can formalize a policy function as the probability of playing action $a$ at time $t$:
+\textbf{$\epsilon$-greedy}\cite{watkins1992}: The simplest way is to explore once in a while and to exploit greedy actions the rest of the time. In other words, we can formalize a policy function as the probability of playing action $a$ at time $t$:
 \begin{equation*}
 	\pi_t(a) = 
 	\begin{cases}
@@ -90,7 +92,7 @@ One straightforward policy is to always exploit the greedy action $a^* = \arg\ma
 Although $\epsilon$-greedy method does guarantee $N_a \rightarrow \infty$ as $t \rightarrow \infty$ and thus $Q_t(a) \rightarrow Q^*(a)$ in theory, it is definitely not the most efficient learning strategy in practice, especially the evaluative feedback is non-stationary , which is true in most decision learning processes. However, it is a popular and effective way to balance exploration and exploitation when augmented with more sophisticated algorithms.
 
 \-\\
-\textbf{Softmax}: When exploring suboptimal actions, it makes more sense to choose risky action-values with lower probability, which intuitively blends in a little bit exploitation within the exploration itself. For instance, one may define the policy to be a probabilistic distribution in proportion to the action-values:
+\textbf{Softmax}\cite{bridle1990}: When exploring suboptimal actions, it makes more sense to choose risky action-values with lower probability, which intuitively blends in a little bit exploitation within the exploration itself. For instance, one may define the policy to be a probabilistic distribution in proportion to the action-values:
 \begin{equation*}
 	\pi_t(a) = \frac{e^{Q_t(a)/\tau}}{\sum_{\hat{a} \in A}e^{Q_t(\hat{a})/\tau}},\; \tau > 0
 \end{equation*}
@@ -99,7 +101,7 @@ Notice that as the tuning parameter $\tau \rightarrow 0$, this softmax method is
 
 
 \-\\
-\textbf{Reinforcement Comparison}: This method is based on a simple idea of ``preferring the good while avoiding the bad.'' Trivial and obvious as it sounds, we need to formalize our definitions of `preference' and `good/bad' to make this concept useful on a multi-armed bandit problem. First, we define the notion of the \emph{reference reward} at time $t$, $\overline{r}_t$:
+\textbf{Reinforcement Comparison}\cite{sutton1984}: This method is based on a simple idea of ``preferring the good while avoiding the bad.'' Trivial and obvious as it sounds, we need to formalize our definitions of `preference' and `good/bad' to make this concept useful on a multi-armed bandit problem. First, we define the notion of the \emph{reference reward} at time $t$, $\overline{r}_t$:
 \begin{equation*}
 	\overline{r}_{t+1} = \overline{r}_t + \alpha\,[r_t - \overline{r}_t]
 \end{equation*}
@@ -114,7 +116,7 @@ Notice that as the tuning parameter $\tau \rightarrow 0$, this softmax method is
 \end{equation*}
 
 \-\\
-\textbf{Pursuit}: The \emph{pursuit} method maintains both the action-value estimates $Q_t(a)$ for choosing the greedy action $a^*_t$ and the policy $\pi_t(a)$, which is updated by incrementing toward one and zero according to the following rule:
+\textbf{Pursuit}\cite{thathachar1985}: The \emph{pursuit} method maintains both the action-value estimates $Q_t(a)$ for choosing the greedy action $a^*_t$ and the policy $\pi_t(a)$, which is updated by incrementing toward one and zero according to the following rule:
 \begin{equation*}
 	\pi_{t+1}(a) = 
 	\begin{cases}
@@ -246,7 +248,7 @@ LDA is essentially pulling out the `principal components' from the text document
 Now we have a collection of well-defined distance functions, we can start looking at clustering methods to group our particles together accordingly, and here are a set of common clustering algorithms we will consider:
 
 \-\\
-\textbf{K-Means:} As the name itself suggests, the K-Means clustering algorithm consists of K cluster centroids and moves these means iteratively towards the center of its closest neighbors, until they no longer change. Although K-Means has been proved to be guaranteed for convergence \cite{selim1984}, its clustering performance is often correlated to how the seeds are initialized at the beginning, and the optimal choice of $K$ is often not apparent (in our case, it is the same as the number of topics.)
+\textbf{K-Means}\cite{steinhaus1957}: As the name itself suggests, the K-Means clustering algorithm consists of K cluster centroids and moves these means iteratively towards the center of its closest neighbors, until they no longer change. Although K-Means has been proved to be guaranteed for convergence \cite{selim1984}, its clustering performance is often correlated to how the seeds are initialized at the beginning, and the optimal choice of $K$ is often not apparent (in our case, it is the same as the number of topics.)
 
 \begin{verbatim}
 1. Initialize the means by picking 
@@ -271,9 +273,9 @@ Now we have a collection of well-defined distance functions, we can start lookin
 Although we have defined the distance functions in the previous section, we have yet formalized the similarity functions between clusters. In our method, we will focus on the following four similarity functions:
 
 \begin{itemize}
-	\item \textbf{Single-linkage:} Also known as the nearest neighbor, computes the distance between the two closest elements from two clusters
-	\item \textbf{Complete-linkage:} The conjugate of \textbf{single-linkage}, also known as the farthest neighbor, computes the distance between the two farthest elements (maximum distance) from two clusters
-	\item \textbf{UPGMA: } Unweighted Pair Group Method with Averaging calculates the distance between two clusters, $C_i \& C_j$, by averaging all distances between any pair of objects from the two clusters.
+	\item \textbf{Single-linkage}\cite{sibson1973}: Also known as the nearest neighbor, computes the distance between the two closest elements from two clusters
+	\item \textbf{Complete-linkage}\cite{Spath1980}: The conjugate of \textbf{single-linkage}, also known as the farthest neighbor, computes the distance between the two farthest elements (maximum distance) from two clusters
+	\item \textbf{UPGMA}\cite{sokal1958} Unweighted Pair Group Method with Averaging calculates the distance between two clusters, $C_i \& C_j$, by averaging all distances between any pair of objects from the two clusters.
 	\begin{equation*}
 		dist(C_i, C_j) = \frac{1}{|C_i||C_j|}\sum_{w_i \in C_i}\sum_{w_j \in C_j}dist(w_i, w_j)
 	\end{equation*}
@@ -530,8 +532,13 @@ We introduced a selection of concepts to quantitatively measure the efficiency a
 \section{Acknowledgements}
 We really appreciate Professor Stone's knowledgable guidance and tremendous patience with this project. This work will not be possible without him.
 
+\newpage
 %Be sure to include a standard, well-formated, comprehensive bibliography with citations from the text referring to previously published papers in the scientific literature that you utilized or are related to your work.
 \begin{thebibliography}{1}
+
+\bibitem{sutton1998}
+Sutton, R. S., and Barto, A. G. (1998). \emph{Introduction to reinforcement learning}. MIT Press.
+
 \bibitem{dresner2008}
 Dresner, K. and Stone, P. A Multiagent Approach to Autonomous Intersection Management. \begin{em}Journal of Artificial Intelligence Research\end{em}, 31:591-656, March 2008.
 
@@ -555,6 +562,30 @@ Diuk, C., Li, L. and Leffler, B. R. The Adaptive k-Meteorologists Problem and It
 
 \bibitem{bertsekas1996}
 Bertsekas, D. P., and Tsitsiklis, J. N. (1996). Neuro-Dynamic Programming (Optimization and Neural Computation Series, 3). \begin{em}Athena Scientific\end{em}, 7, 15-23.
+
+\bibitem{thathachar1985}
+Thathachar, M. A. L., and Sastry, P. S. (1985). \emph{A new approach to the design of reinforcement schemes for learning automata. Systems, Man and Cybernetics}, IEEE Transactions on, (1), 168-175.
+
+\bibitem{watkins1992}
+Watkins, C. J., and Dayan, P. (1992). Q-learning. \emph{Machine learning}, 8(3-4), 279-292.
+
+\bibitem{bridle1990}
+Bridle, J. S. (1990). Probabilistic interpretation of feedforward classification network outputs, with relationships to statistical pattern recognition. In \emph{Neurocomputing} (pp. 227-236). Springer Berlin Heidelberg.
+
+\bibitem{sutton1984}
+Sutton, R. S. (1984). Temporal credit assignment in reinforcement learning.
+
+\bibitem{steinhaus1957}
+Steinhaus, H. (1957). Sur la division des corps matériels en parties. Bull. Acad. Polon. Sci. (in French) 4 (12): 801–804. MR 0090073. Zbl 0079.16403.
+
+\bibitem{sibson1973}
+ R. Sibson (1973). SLINK: an optimally efficient algorithm for the single-link cluster method. \emph{The Computer Journal (British Computer Society)} 16 (1): 30–34.
+ 
+\bibitem{Spath1980}
+H. Späth (1980). Cluster Analysis Algorithms.
+
+\bibitem{sokal1958}
+Sokal R and Michener C (1958). A statistical method for evaluating systematic relationships. \emph{University of Kansas Science Bulletin 38: 1409–1438.}
 
 \end{thebibliography}
 
