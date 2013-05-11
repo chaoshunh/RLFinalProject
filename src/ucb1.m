@@ -1,4 +1,4 @@
-function ucb1(alpha, X, K)
+function [R, AR, QR] = ucb1(alpha, X, K)
 N = size(X,2);
 C = size(X,1);
 
@@ -33,14 +33,6 @@ for t = 1:N
     R(t) = rew;
     QR(t,:) = Q;
 end
-figure
-plot(R)
-
-figure
-plot(AR)
-
-figure
-plot(QR)
 
 function a = argmaxUCB1(Q, A, N_a)
 [~, I] = max(Q(A) + sqrt(2*log(sum(N_a))*N_a.^(-1)));

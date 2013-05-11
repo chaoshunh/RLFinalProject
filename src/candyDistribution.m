@@ -25,17 +25,25 @@ for n = 1:N
 	end		
 end
 
-Xi = zeros(line, 2);
-Ind = zeros(line, 2);
+Xi = zeros(line, 4);
+Ind = zeros(c, n);
 
 w = 0;
-for n = 1:N
-	for c = 1:C
+for c = 1:C	
+	for n = 1:N
 		w = w + 1;
-		Ind(w,:) = [n, c];
+		Ind(c,n) = w;
 		Xi(w, 1) = HP(c,n, 1);
 		Xi(w, 2) = HP(c,n, 2);
+		if(HP(c,n,1)>0)
+			Xi(w, 3) = length(find(HP(c, n:N,1))); % number of chidren behind
+			Xi(w, 4) = length(find(HP(:, n,1))); % number of frontiers
+		end
 	end
+end
+
+for i = 1:size(Xi,2)
+	Xi(:,i) = (Xi(:,i) - min(Xi(:,i)))/(max(Xi(:,i)) - min(Xi(:,i)));
 end
 
 % keyboard
@@ -46,28 +54,37 @@ if(strcmp(link, 'kmeans'))
 else
     Z = linkage(Xi, link, dist);
 	% dendrogram(Z);
-    Cent = cluster(Z, 'maxclust', 10);
+    Cent = cluster(Z, 'maxclust', K);
     % Xc = centroids(Xi, Cent, K);
 end
 % display(Cent);
 
 for n = 1:N
 	for c = 1:C
-		X(c,n,1) = cluster;
-		X(c,n,2) = pr;
-		X(c,n,3) = nr;
-
+		w = Ind(c,n);
+		if (w>=0)			
+			X(c,n,1) = Cent(w);			
+			r = Xi(w,1);
+			t = Xi(w,2);
+			pr = r + t;
+			nr = -0.1*(r*t);
+			X(c,n,2) = pr;
+			X(c,n,3) = nr;
+		else
+			X(c,n,1) = -1;
+			X(c,n,2) = 0;
+			X(c,n,3) = 0;
+		end
 	end
 end
-scatter(Xi(:,1), Xi(:,2))
 
-% X = PP; 
+% display(Cent);
 
 function [r, t] = newChildren(C)
 if(rand() < 0.5)
 	r = 0;
 	t = 0;
 else
-	r = randi(round(C/2));
-	t = randi(C);	
+	r = randi(round(C/2))+randn();
+	t = randi(C)+randn();	
 end
